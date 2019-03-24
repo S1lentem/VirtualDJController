@@ -1,0 +1,23 @@
+.slider {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  transform: rotate(270deg);
+  height: 100px;
+}
+
+.center {
+  align-self: center;
+}
+
+.flexcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.flexitem {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 25%;
+}
