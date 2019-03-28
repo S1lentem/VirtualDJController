@@ -30,7 +30,7 @@ class AudioSource {
   }
 
   pause(){
-    if (this.status === AudioTrackStatus.played){
+    if (this.status == AudioTrackStatus.played){
       this.context.suspend();
       this.status = AudioTrackStatus.suspended;
     }
@@ -38,7 +38,7 @@ class AudioSource {
 
   stop(){
     this.source.stop();
-    if (this.status === AudioTrackStatus.suspended){
+    if (this.status == AudioTrackStatus.suspended){
       this.context.resume();
     }
     this.status = AudioTrackStatus.stoped;
