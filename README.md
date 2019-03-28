@@ -23,4 +23,4 @@ Among the existing counterparts can distinguish two main desktop software:
 ## **Implementation**
 This project will be implemented using **[React](https://reactjs.org/)**. It may seem that ** React ** sishkom heavy for this idea, one in the future we plan to expand the functionality of the website (Add registration and logic on the back end).
 
-The main tool for manipulating audio is **[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)**.
+The main tool for manipulating audio is **[Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)**
