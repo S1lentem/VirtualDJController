@@ -9,6 +9,7 @@ const STATUS_TEXT_NAME = 'status';
 const PLAY_BUTTON_NAME = 'play';
 const STOP_BUTTON_NAME = 'stop';
 const PAUSE_BUTTON_NAME = 'pause';
+const LOAD_AUDIO_BUTTON = 'load_audio';
 
 const MESSAGE_FOR_LOADING = 'Audio loading';
 const MESSAGE_FOR_ERROR_LOADING = 'Error decoding file';
@@ -19,29 +20,9 @@ class AudioPlayer extends React.Component {
     this.state = {
       audioSource: null,
       id: props.id,
-      isLoaded: false
+      isLoaded: false,
+      audioContext: new window.AudioContext()
     }
-    this.loadSoundFile(props.path);
-  }
-
-
-  loadSoundFile(url){
-    let context = new window.AudioContext();
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.responseType = 'arraybuffer';
-    xhr.onload = e => {
-      context.decodeAudioData(xhr.response,
-      decodedArrayBuffer => {
-        this.setState({
-          audioSource: new AudioSource(context, decodedArrayBuffer),
-          isLoaded: true
-        });
-        this.chaingeLoadStatus('Audio uploaded');
-      }, e => this.chaingeLoadStatus(MESSAGE_FOR_ERROR_LOADING));
-    };
-    xhr.onprogress = e => this.updateStatusLoading();
-    xhr.send();
   }
 
   chaingeLoadStatus(message){
@@ -114,6 +95,21 @@ class AudioPlayer extends React.Component {
     }
   }
 
+  loadAuio(){
+    let files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
+    let reader = new FileReader();
+
+    reader.onload = ev => {
+      this.state.audioContext.decodeAudioData(ev.target.result).then(buffer => {
+        this.setState({
+          audioSource: new AudioSource(this.state.audioContext, buffer),
+          isLoaded: true
+        });
+      }, false);
+    }
+    reader.readAsArrayBuffer(files[0]);
+  }
+
   render(){
     let audioSource = this.state.audioSource;
     let isLoaded = this.state.isLoaded;
@@ -122,6 +118,8 @@ class AudioPlayer extends React.Component {
         <div className='flexitem'>
           <div>
             <h1>This is audio player {id}</h1>
+            <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
+              onChange={() => this.loadAuio()}/>
             <h3 id={STATUS_TEXT_NAME + id}>Audio loading</h3>
           </div>
           <div>
@@ -131,30 +129,22 @@ class AudioPlayer extends React.Component {
               className='margined'  disabled={isLoaded ? false : true}>Stop</button>
             <button id={PAUSE_BUTTON_NAME + id} onClick={() => audioSource.pause()}
               className='margined'  disabled={isLoaded ? false : true}>Pause</button>
-            <div className='flexcontainer'>
-                <div className='flexitem '>
-                <div>
-                  <label htmlFor='gain' className='center'>Volume</label>
-                </div>
-                <div>
-                  <input id={GAIN_SLIEDR_NAME + id} type='range' className='slider'
-                      onInput={() => this.changeGain()}
-                      min='0' max='1.25' step='0.0125'/>
-                </div>
+            <div>
+              <div>
+                <label htmlFor={GAIN_SLIEDR_NAME + id} className='center'>Volume</label>
+                <input id={GAIN_SLIEDR_NAME + id} type='range' className='slider'
+                    onInput={() => this.changeGain()}
+                    min='0' max='1.25' step='0.0125'/>
               </div>
-              <div className=''>
-                <div>
-                  <label htmlFor='speed'>Speed</label>
-                </div>
-                <div>
-                  <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
-                      onInput={() => this.changeSpeed()}
-                      onDoubleClick={() => this.resetSpeed()}
-                      min='0.5' max='1.5' step='0.0125'/>
-                </div>
-                <div>
-                  <button onClick={() => this.smoothResetSpeed()}>Reset speed</button>
-                </div>
+              <div>
+                <label htmlFor={SPEED_SLIEDR_NAME + id}>Speed</label>
+                <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
+                    onInput={() => this.changeSpeed()}
+                    onDoubleClick={() => this.resetSpeed()}
+                    min='0.5' max='1.5' step='0.0125'/>
+              </div>
+              <div>
+                <button onClick={() => this.smoothResetSpeed()}>Reset speed</button>
               </div>
             </div>
           </div>
