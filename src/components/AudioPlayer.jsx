@@ -20,8 +20,7 @@ class AudioPlayer extends React.Component {
     this.state = {
       audioSource: null,
       id: props.id,
-      isLoaded: false,
-      audioContext: new window.AudioContext()
+      isLoaded: false
     }
   }
 
@@ -98,11 +97,12 @@ class AudioPlayer extends React.Component {
   loadAuio(){
     let files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
     let reader = new FileReader();
+    let audioContext = new window.AudioContext()
 
     reader.onload = ev => {
-      this.state.audioContext.decodeAudioData(ev.target.result).then(buffer => {
+      audioContext.decodeAudioData(ev.target.result).then(buffer => {
         this.setState({
-          audioSource: new AudioSource(this.state.audioContext, buffer),
+          audioSource: new AudioSource(audioContext, buffer),
           isLoaded: true
         });
       }, false);
