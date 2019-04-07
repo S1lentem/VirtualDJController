@@ -97,15 +97,14 @@ class AudioPlayer extends React.Component {
     let isLoaded = this.state.isLoaded;
     let id = this.state.id;
     return (
-        <div className='flexitem'>
-          <div>
+        <div>
+          <div className='center'>
             <h1>This is audio player {id}</h1>
             <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
-              onChange={() => this.loadAuio()}/>
-            <canvas id={WAVEFORM_CANVAS + id}></canvas>
+              onChange={() => this.loadAuio()} />
             <h3 id={STATUS_TEXT_NAME + id}>Audio loading</h3>
           </div>
-          <div>
+          <div className='center'>
             <button id={PLAY_BUTTON_NAME + id} onClick={() => audioSource.play()}
               className='margined'  disabled={isLoaded ? false : true}>Play</button>
             <button id={STOP_BUTTON_NAME + id} onClick={() => audioSource.stop()}
