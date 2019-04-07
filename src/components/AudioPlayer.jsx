@@ -97,6 +97,9 @@ class AudioPlayer extends React.Component {
     reader.readAsArrayBuffer(files[0]);
   }
 
+  getAudioSource(){
+    return this.state.audioSource;
+  }
 
   render(){
     let audioSource = this.state.audioSource;
