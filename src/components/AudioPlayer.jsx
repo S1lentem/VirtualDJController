@@ -18,7 +18,7 @@ class AudioPlayer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      audioSource: null,
+      audioSource: new AudioSource(),
       waveform: null,
       id: props.id,
       isLoaded: false
@@ -84,11 +84,11 @@ class AudioPlayer extends React.Component {
     const files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
     const reader = new FileReader();
     const webAudioBuilder = require('waveform-data/webaudio');
-    const audioContext = new window.AudioContext();
+    const audioContext = this.state.audioSource.getContext();
     reader.onload = ev => {
       audioContext.decodeAudioData(ev.target.result).then(buffer => {
+        this.state.audioSource.load(buffer);
         this.setState({
-          audioSource: new AudioSource(audioContext, buffer),
           isLoaded: true
         });
       }, false);

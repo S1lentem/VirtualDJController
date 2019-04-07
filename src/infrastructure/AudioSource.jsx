@@ -1,6 +1,10 @@
 class AudioSource {
-  constructor(audioContext, buffer){
-    this.context = audioContext;
+  constructor(buffer){
+    this.context = new window.AudioContext();
+    this.load(buffer);
+  }
+
+  load(buffer){
     this.buffer = buffer;
     this.source = null;
     this.gainNode = null;
@@ -62,6 +66,10 @@ class AudioSource {
 
   isReadyForPlayed(){
     return this.source != null;
+  }
+
+  getContext(){
+    return this.context;
   }
 }
 
