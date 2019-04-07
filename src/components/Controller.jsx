@@ -2,7 +2,7 @@ import React from 'react'
 
 import AudioPlayer from './AudioPlayer'
 import Mixer from './mixer/Mixer'
-
+import AudioSource from '../infrastructure/AudioSource'
 
 import '../styles/index.css'
 
@@ -12,20 +12,25 @@ const audio2Path = 'tst2.mp3'
 const COUNT_AUDIO_PLAYER = 2;
 
 class Controller extends React.Component {
-
-
   render(){
-    // const leftAudioPlayers = [];
-    // const rightAudioPlayers = [];
-    // for (var i = 0; i < COUNT_AUDIO_PLAYER; i++){
-    //
-    // }
+    const leftAudioPlayers = [];
+    const rightAudioPlayers = [];
+    const audioSources = [];
+    for (var i = 0; i < COUNT_AUDIO_PLAYER; i++){
+      let audioSource = new AudioSource(i);
+      if (i % 2 === 0){
+        leftAudioPlayers.push(<AudioPlayer id={i} source={audioSource}/>);
+      } else {
+        rightAudioPlayers.push(<AudioPlayer id={i} source={audioSource}/>);
+      }
+      audioSources.push(audioSource);
+    }
 
     return (
       <div className='flexcontainer'>
-        <AudioPlayer path={audio1Path} id={1} className='flexitem'/>
-        <Mixer audioSources={[1,2]} />
-        <AudioPlayer path={audio2Path} id={2} className='flexitem'/>
+        {leftAudioPlayers}
+        <Mixer audioSources={audioSources} />
+        {rightAudioPlayers}
       </div>
     );
   }

@@ -1,7 +1,7 @@
 class AudioSource {
-  constructor(buffer){
+  constructor(id){
     this.context = new window.AudioContext();
-    this.load(buffer);
+    this.id = id;
   }
 
   load(buffer){
@@ -70,6 +70,10 @@ class AudioSource {
 
   getContext(){
     return this.context;
+  }
+
+  getId(){
+    return this.id;
   }
 }
 
