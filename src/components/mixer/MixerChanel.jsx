@@ -25,10 +25,16 @@ class MixerChannel extends React.Component {
 
     return (
       <div>
-        <label htmlFor={GAIN_SLIEDR_NAME + id} className='center'>Volume</label>
-        <input id={GAIN_SLIEDR_NAME + id} type='range' className='slider'
-            onInput={() => this.changeGain()}
-            min='0' max='1.25' step='0.0125'/>
+        <div>
+          <div className='center'>
+            <label htmlFor={GAIN_SLIEDR_NAME + id} >Volume</label>
+          </div>
+          <div>
+            <input id={GAIN_SLIEDR_NAME + id} type='range' className='slider'
+              onInput={() => this.changeGain()}
+              min='0' max='1.25' step='0.0125'/>
+          </div>
+        </div>
       </div>
     );
   }

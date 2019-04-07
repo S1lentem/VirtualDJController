@@ -15,7 +15,7 @@ class Mixer extends React.Component {
       <MixerChannel source={source} />
    ));
     return (
-      <div className='flexitem'>
+      <div className='flexcontainer'>
         {chanels}
       </div>
     );
