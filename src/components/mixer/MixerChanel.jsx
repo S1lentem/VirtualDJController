@@ -29,6 +29,7 @@ class MixerChannel extends React.Component {
     }
   }
 
+
   render(){
     const id = this.state.source.getId();
 

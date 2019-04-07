@@ -1,6 +1,8 @@
 import React from 'react'
 import MixerChannel from './MixerChanel'
 
+import '../../styles/index.css'
+
 class Mixer extends React.Component {
   constructor (props){
     super(props);
@@ -15,8 +17,18 @@ class Mixer extends React.Component {
       <MixerChannel source={source} />
    ));
     return (
-      <div className='flexcontainer'>
-        {chanels}
+      <div>
+        <div className='flexcontainer'>
+          {chanels}
+        </div>
+        <div>
+          <div className='center'>
+            <label>Crossfader</label>
+          </div>
+          <div className='center'>
+            <input type='range' min='0' max='1' step='0.0078125'/>
+          </div>
+        </div>
       </div>
     );
   }
