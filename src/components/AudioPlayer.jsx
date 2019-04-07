@@ -92,7 +92,7 @@ class AudioPlayer extends React.Component {
     return (
         <div>
           <div className='center'>
-            <h1>This is audio player {id}</h1>
+            <h1>Audio Player {id + 1}</h1>
             <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
               onChange={() => this.loadAuio()} />
             <h3 id={STATUS_TEXT_NAME + id}>Audio loading</h3>
@@ -106,21 +106,20 @@ class AudioPlayer extends React.Component {
               className='margined'  disabled={isLoaded ? false : true}>Pause</button>
             <div>
               <div>
-
-              </div>
-              <div>
-                <label htmlFor={SPEED_SLIEDR_NAME + id}>Speed</label>
                 <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
                     onInput={() => this.changeSpeed()}
                     onDoubleClick={() => this.resetSpeed()}
                     min='0.5' max='1.5' step='0.0125'/>
+                </div>
+                <div className='center'>
+                  <label htmlFor={SPEED_SLIEDR_NAME + id}>Speed</label>
+                </div>
               </div>
               <div>
                 <button onClick={() => this.smoothResetSpeed()}>Reset speed</button>
               </div>
             </div>
           </div>
-        </div>
       );
   }
 }
