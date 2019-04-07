@@ -3,6 +3,8 @@ import React from 'react'
 import '../styles/index.css'
 import AudioSource from '../infrastructure/AudioSource'
 
+import WaveformData from 'waveform-data'
+
 const SPEED_SLIEDR_NAME = 'speed';
 const GAIN_SLIEDR_NAME = 'gain';
 const STATUS_TEXT_NAME = 'status';
@@ -10,33 +12,17 @@ const PLAY_BUTTON_NAME = 'play';
 const STOP_BUTTON_NAME = 'stop';
 const PAUSE_BUTTON_NAME = 'pause';
 const LOAD_AUDIO_BUTTON = 'load_audio';
-
-const MESSAGE_FOR_LOADING = 'Audio loading';
-const MESSAGE_FOR_ERROR_LOADING = 'Error decoding file';
+const WAVEFORM_CANVAS = 'waveform';
 
 class AudioPlayer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       audioSource: null,
+      waveform: null,
       id: props.id,
       isLoaded: false
     }
-  }
-
-  chaingeLoadStatus(message){
-    let textView = document.getElementById(STATUS_TEXT_NAME + this.state.id);
-    textView.innerHTML = message;
-  }
-
-  updateStatusLoading(){
-    let statusView = document.getElementById(STATUS_TEXT_NAME + this.state.id);
-    if (statusView.innerHTML.length < 16){
-      statusView.innerHTML += '.';
-    } else {
-      statusView.innerHTML = MESSAGE_FOR_LOADING;
-    }
-
   }
 
   /*TO DO: Added decorater */
@@ -95,10 +81,10 @@ class AudioPlayer extends React.Component {
   }
 
   loadAuio(){
-    let files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
-    let reader = new FileReader();
-    let audioContext = new window.AudioContext()
-
+    const files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
+    const reader = new FileReader();
+    const webAudioBuilder = require('waveform-data/webaudio');
+    const audioContext = new window.AudioContext();
     reader.onload = ev => {
       audioContext.decodeAudioData(ev.target.result).then(buffer => {
         this.setState({
@@ -106,9 +92,11 @@ class AudioPlayer extends React.Component {
           isLoaded: true
         });
       }, false);
+
     }
     reader.readAsArrayBuffer(files[0]);
   }
+
 
   render(){
     let audioSource = this.state.audioSource;
@@ -120,6 +108,7 @@ class AudioPlayer extends React.Component {
             <h1>This is audio player {id}</h1>
             <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
               onChange={() => this.loadAuio()}/>
+            <canvas id={WAVEFORM_CANVAS + id}></canvas>
             <h3 id={STATUS_TEXT_NAME + id}>Audio loading</h3>
           </div>
           <div>
