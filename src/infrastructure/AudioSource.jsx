@@ -8,17 +8,20 @@ class AudioSource {
     this.buffer = buffer;
     this.source = null;
     this.gainNode = null;
+    this.panNode = null;
     this.status = AudioTrackStatus.stoped;
   }
 
   createAudioSource(audioContext, buffer){
     this.source = audioContext.createBufferSource();
     this.gainNode = this.context.createGain();
+    this.panNode = this.context.createStereoPanner();
     this.status = AudioTrackStatus.stoped;
 
     this.source.buffer = buffer;
     this.source.connect(this.gainNode);
-    this.gainNode.connect(this.context.destination);
+    this.gainNode.connect(this.panNode);
+    this.panNode.connect(this.context.destination);
   }
 
   play(){
@@ -54,6 +57,10 @@ class AudioSource {
 
   setSpeed(value){
     this.source.playbackRate.value = value;
+  }
+
+  setPanned(value){
+    this.panNode.pan.value = value;
   }
 
   addSpeed(value){
