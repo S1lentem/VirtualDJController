@@ -18,19 +18,10 @@ class AudioPlayer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      audioSource: null,
+      audioSource: props.source,
       waveform: null,
       id: props.id,
       isLoaded: false
-    }
-  }
-
-  /*TO DO: Added decorater */
-  changeGain(){
-    let audioSource = this.state.audioSource
-    if (audioSource != null && audioSource.isReadyForPlayed()){
-      let currentGain = document.getElementById(GAIN_SLIEDR_NAME + this.state.id).value;
-      this.state.audioSource.setGain(currentGain);
     }
   }
 
@@ -84,11 +75,11 @@ class AudioPlayer extends React.Component {
     const files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
     const reader = new FileReader();
     const webAudioBuilder = require('waveform-data/webaudio');
-    const audioContext = new window.AudioContext();
+    const audioContext = this.state.audioSource.getContext();
     reader.onload = ev => {
       audioContext.decodeAudioData(ev.target.result).then(buffer => {
+        this.state.audioSource.load(buffer);
         this.setState({
-          audioSource: new AudioSource(audioContext, buffer),
           isLoaded: true
         });
       }, false);
@@ -97,6 +88,9 @@ class AudioPlayer extends React.Component {
     reader.readAsArrayBuffer(files[0]);
   }
 
+  getAudioSource(){
+    return this.state.audioSource;
+  }
 
   render(){
     let audioSource = this.state.audioSource;
@@ -120,10 +114,7 @@ class AudioPlayer extends React.Component {
               className='margined'  disabled={isLoaded ? false : true}>Pause</button>
             <div>
               <div>
-                <label htmlFor={GAIN_SLIEDR_NAME + id} className='center'>Volume</label>
-                <input id={GAIN_SLIEDR_NAME + id} type='range' className='slider'
-                    onInput={() => this.changeGain()}
-                    min='0' max='1.25' step='0.0125'/>
+
               </div>
               <div>
                 <label htmlFor={SPEED_SLIEDR_NAME + id}>Speed</label>
