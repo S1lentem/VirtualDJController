@@ -25,7 +25,6 @@ class AudioPlayer extends React.Component {
     }
   }
 
-  /*TO DO: Added decorater */
   changeSpeed(){
     let audioSource = this.state.audioSource;
     if (audioSource != null && audioSource.isReadyForPlayed()){
@@ -46,8 +45,6 @@ class AudioPlayer extends React.Component {
     }
   }
 
-
-  /*TO DO: Added decorater */
   smoothResetSpeed() {
     let audioSource = this.state.audioSource;
     if (audioSource != null && audioSource.isReadyForPlayed()){
@@ -86,10 +83,6 @@ class AudioPlayer extends React.Component {
 
     }
     reader.readAsArrayBuffer(files[0]);
-  }
-
-  getAudioSource(){
-    return this.state.audioSource;
   }
 
   render(){
