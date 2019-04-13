@@ -6,22 +6,26 @@ class AudioSource {
 
   load(buffer){
     this.buffer = buffer;
-    this.source = null;
-    this.gainNode = null;
-    this.panNode = null;
     this.status = AudioTrackStatus.stoped;
   }
 
   createAudioSource(audioContext, buffer){
     this.source = audioContext.createBufferSource();
     this.gainNode = this.context.createGain();
+    this.crossafaderGainNode = this.context.createGain();
     this.panNode = this.context.createStereoPanner();
     this.status = AudioTrackStatus.stoped;
 
     this.source.buffer = buffer;
     this.source.connect(this.gainNode);
-    this.gainNode.connect(this.panNode);
+    this.gainNode.connect(this.crossafaderGainNode);
+    this.crossafaderGainNode.connect(this.panNode);
+    // this.gainNode.connect(this.panNode);
     this.panNode.connect(this.context.destination);
+
+    this.source.onended = event =>{
+      this.stop();
+    }
   }
 
   play(){
