@@ -21,25 +21,23 @@ class AudioPlayer extends React.Component {
       audioSource: props.source,
       waveform: null,
       id: props.id,
-      isLoaded: false
+      isLoaded: false,
+      speed: 1
     }
   }
 
   changeSpeed(){
-    let audioSource = this.state.audioSource;
-    if (audioSource != null && audioSource.isReadyForPlayed()){
-      if (this.state.speedTimerId){
-        clearInterval(this.state.speedTimerId);
-      }
-      let currentSpeed = document.getElementById(SPEED_SLIEDR_NAME + this.state.id).value;
-      audioSource.setSpeed(currentSpeed);
+    if (this.state.speedTimerId){
+      clearInterval(this.state.speedTimerId);
     }
+    let currentSpeed = Number(document.getElementById(SPEED_SLIEDR_NAME + this.state.id).value);
+    this.state.audioSource.setSpeed(currentSpeed);
+    this.setState({speed: currentSpeed});
   }
 
   resetSpeed(){
     let audioSource = this.state.audioSource;
-    let speedSlider = document.getElementById(SPEED_SLIEDR_NAME + this.state.id);
-    speedSlider.value = 1;
+    this.setState({speed: 1});
     if (audioSource != null && audioSource.isReadyForPlayed()){
       this.state.audioSource.setSpeed(1);
     }
@@ -47,25 +45,27 @@ class AudioPlayer extends React.Component {
 
   smoothResetSpeed() {
     let audioSource = this.state.audioSource;
-    if (audioSource != null && audioSource.isReadyForPlayed()){
-      let slider = document.getElementById(SPEED_SLIEDR_NAME + this.state.id);
-      let turnDown = audioSource.getSpeed() > 1 ? true : false;
-      let value = turnDown ? -0.00625 : 0.00625;
-      let timerId = setInterval(() => {
-        let currentSpeed = audioSource.getSpeed();
-          if ((turnDown && currentSpeed <= 1) ||
-              (!turnDown && currentSpeed >= 1)){
-            audioSource.setSpeed(1);
-            slider.value = 1;
-            clearInterval(timerId);
-            return;
-          }
-          slider.value += value;
-          audioSource.addSpeed(value);
-
-      }, 500);
-      this.setState({speedTimerId: timerId});
+    if (audioSource.getSpeed() === undefined){
+      return;
     }
+    let slider = document.getElementById(SPEED_SLIEDR_NAME + this.state.id);
+    let turnDown = audioSource.getSpeed() > 1 ? true : false;
+    let value = turnDown ? -0.00625 : 0.00625;
+
+    let timerId = setInterval(() => {
+      let currentSpeed = audioSource.getSpeed();
+        if ((turnDown && currentSpeed <= 1) ||
+            (!turnDown && currentSpeed >= 1)){
+          audioSource.setSpeed(1);
+          slider.value = 1;
+          clearInterval(timerId);
+          return;
+        }
+        slider.value = currentSpeed;
+        audioSource.addSpeed(value);
+
+    }, 500);
+    this.setState({speedTimerId: timerId});
   }
 
   loadAuio(){
@@ -89,6 +89,9 @@ class AudioPlayer extends React.Component {
     let audioSource = this.state.audioSource;
     let isLoaded = this.state.isLoaded;
     let id = this.state.id;
+
+    const speed = this.state.speed;
+    console.log(speed);
     return (
         <div>
           <div className='center'>
@@ -107,7 +110,7 @@ class AudioPlayer extends React.Component {
             <div>
               <div>
                 <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
-                    onInput={() => this.changeSpeed()}
+                    value={speed} onInput={() => this.changeSpeed()}
                     onDoubleClick={() => this.resetSpeed()}
                     min='0.5' max='1.5' step='0.0125'/>
                 </div>

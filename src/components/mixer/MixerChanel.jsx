@@ -9,7 +9,8 @@ class MixerChannel extends React.Component {
   constructor(props){
     super(props);
     this.state  = {
-      source: props.source
+      source: props.source,
+      pan: 0
     }
   }
 
@@ -22,16 +23,17 @@ class MixerChannel extends React.Component {
   }
 
   changePan(){
-    let audioSource = this.state.source;
-    if (audioSource != null && audioSource.isReadyForPlayed()){
-      let currentPan = document.getElementById(PAN_SLIDER_NAME + audioSource.getId()).value;
-      audioSource.setPanned(currentPan);
-    }
+    const audioSource = this.state.source;
+    const currentPan = Number(document
+      .getElementById(PAN_SLIDER_NAME + audioSource.getId()).value);
+    audioSource.setPanned(currentPan);
+    this.setState({pan: currentPan});
   }
 
 
   render(){
     const id = this.state.source.getId();
+    const panValue = this.state.pan;
 
     return (
       <div>
@@ -50,9 +52,8 @@ class MixerChannel extends React.Component {
             <label htmlFor={PAN_SLIDER_NAME + id}>Pan</label>
           </div>
           <div>
-            <input id={PAN_SLIDER_NAME + id}
-              onInput={() => this.changePan()}
-              type='range' min='-1' max='1' step='0.0078125'/>
+            <input id={PAN_SLIDER_NAME + id} onInput={() => this.changePan()}
+              type='range' min='-1' max='1' step='0.0078125' value={panValue}/>
           </div>
         </div>
       </div>

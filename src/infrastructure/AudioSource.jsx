@@ -1,4 +1,8 @@
+const defaultSpeed = 1;
+const defaultGain = 1;
+
 class AudioSource {
+
   constructor(id){
     this.context = new window.AudioContext();
     this.id = id;
@@ -59,11 +63,15 @@ class AudioSource {
   }
 
   setSpeed(value){
-    this.source.playbackRate.value = value;
+    if (this.source !== undefined){
+      this.source.playbackRate.value = value;
+    }
   }
 
   setPanned(value){
-    this.panNode.pan.value = value;
+    if (this.source !== undefined){
+      this.panNode.pan.value = value;
+    }
   }
 
   addSpeed(value){
@@ -71,6 +79,9 @@ class AudioSource {
   }
 
   getSpeed(){
+    if (this.source === undefined){
+      return undefined;
+    }
     return this.source.playbackRate.value;
   }
 
@@ -92,7 +103,6 @@ class AudioSource {
 
   setCrossfaderGain(value){
     if (this.crossafaderGainNode !== undefined){
-      console.log(this.crossafaderGainNode.value);
       this.crossafaderGainNode.gain.value = value;
     }
   }
