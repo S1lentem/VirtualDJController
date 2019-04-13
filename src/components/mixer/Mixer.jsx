@@ -6,16 +6,36 @@ import '../../styles/index.css'
 class Mixer extends React.Component {
   constructor (props){
     super(props);
-     this.state = {
-       sources: props.audioSources
+    this.state = {
+      sources: props.audioSources,
+      leftPlayer: props.audioSources[0],
+      rightPlayer: props.audioSources[1]
      }
    }
 
 
+   changeCrossfader(){
+     const crossfaderValue = Number(document.getElementById('crossfader').value);
+     const leftPlayer = this.state.leftPlayer;
+     const rightPlayer = this.state.rightPlayer;
+
+     if (crossfaderValue < 0){
+       rightPlayer.setCrossfaderGain(1 + crossfaderValue);
+     } else if (crossfaderValue > 0) {
+       leftPlayer.setCrossfaderGain(1 - crossfaderValue);
+
+     } else {
+       rightPlayer.setCrossfaderGain(1);
+       leftPlayer.setCrossfaderGain(1);
+     }
+     console.log(crossfaderValue);
+   }
+
+
   render() {
-   const chanels = this.state.sources.map(source => (
-      <MixerChannel source={source} />
-   ));
+    const chanels = this.state.sources.map(source => (
+        <MixerChannel source={source} />
+    ));
     return (
       <div>
         <div className='flexcontainer'>
@@ -26,7 +46,8 @@ class Mixer extends React.Component {
             <label>Crossfader</label>
           </div>
           <div className='center'>
-            <input type='range' min='0' max='1' step='0.0078125'/>
+            <input id='crossfader' type='range' min='-1' max='1' step='0.015625'
+              onChange={() => this.changeCrossfader()}/>
           </div>
         </div>
       </div>

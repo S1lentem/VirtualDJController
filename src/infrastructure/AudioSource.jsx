@@ -20,7 +20,6 @@ class AudioSource {
     this.source.connect(this.gainNode);
     this.gainNode.connect(this.crossafaderGainNode);
     this.crossafaderGainNode.connect(this.panNode);
-    // this.gainNode.connect(this.panNode);
     this.panNode.connect(this.context.destination);
 
     this.source.onended = event =>{
@@ -85,6 +84,17 @@ class AudioSource {
 
   getId(){
     return this.id;
+  }
+
+  getCrossfaderGain(){
+    return this.crossafaderGainNode;
+  }
+
+  setCrossfaderGain(value){
+    if (this.crossafaderGainNode !== undefined){
+      console.log(this.crossafaderGainNode.value);
+      this.crossafaderGainNode.gain.value = value;
+    }
   }
 }
 
