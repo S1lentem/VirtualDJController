@@ -12,6 +12,15 @@ class MixerChannel extends React.Component {
       source: props.source,
       pan: 0
     }
+    this.state.source.addUploadListener(source => {
+      const currentGain = Number(document
+        .getElementById(GAIN_SLIEDR_NAME + source.getId()).value);
+      const currentPan = Number(document
+        .getElementById(PAN_SLIDER_NAME + source.getId()).value);
+
+      source.setGain(currentGain);
+      source.setPanned(currentPan);
+    });
   }
 
   changeGain(){

@@ -24,6 +24,11 @@ class AudioPlayer extends React.Component {
       isLoaded: false,
       speed: 1
     }
+    this.state.audioSource.addUploadListener(audioSource =>{
+      const speed = Number(document.getElementById(SPEED_SLIEDR_NAME + 
+                                                   this.state.id).value);
+      audioSource.setSpeed(speed);
+    });
   }
 
   changeSpeed(){
@@ -85,13 +90,16 @@ class AudioPlayer extends React.Component {
     reader.readAsArrayBuffer(files[0]);
   }
 
+  updataAudioData(audioSource){
+
+  }
+
   render(){
     let audioSource = this.state.audioSource;
     let isLoaded = this.state.isLoaded;
     let id = this.state.id;
 
     const speed = this.state.speed;
-    console.log(speed);
     return (
         <div>
           <div className='center'>

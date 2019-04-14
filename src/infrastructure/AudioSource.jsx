@@ -6,9 +6,10 @@ class AudioSource {
   constructor(id){
     this.context = new window.AudioContext();
     this.id = id;
+    this.uploadedListeners = [];
   }
 
-  load(buffer){
+  load(buffer, w){
     this.buffer = buffer;
     this.status = AudioTrackStatus.stoped;
   }
@@ -28,6 +29,11 @@ class AudioSource {
 
     this.source.onended = event =>{
       this.stop();
+    }
+
+    console.log(this.uploadedListeners.length);
+    for (var i = 0; i < this.uploadedListeners.length; i++){
+      this.uploadedListeners[i](this);
     }
   }
 
@@ -105,6 +111,10 @@ class AudioSource {
     if (this.crossafaderGainNode !== undefined){
       this.crossafaderGainNode.gain.value = value;
     }
+  }
+
+  addUploadListener(listener){
+    this.uploadedListeners.push(listener);
   }
 }
 
