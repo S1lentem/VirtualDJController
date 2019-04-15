@@ -1,3 +1,5 @@
+import AudioTimeManager from './AudioTimeManager'
+
 const defaultSpeed = 1;
 const defaultGain = 1;
 
@@ -6,62 +8,45 @@ class AudioSource {
   constructor(id){
     this.context = new window.AudioContext();
     this.id = id;
+
     this.uploadedListeners = [];
-  }
+    this.audioTimeManager = new AudioTimeManager(this.context, this.id);
 
-  load(buffer, w){
-    this.buffer = buffer;
-    this.status = AudioTrackStatus.stoped;
-  }
-
-  createAudioSource(audioContext, buffer){
-    this.source = audioContext.createBufferSource();
+    this.source = this.context.createBufferSource();
     this.gainNode = this.context.createGain();
     this.crossafaderGainNode = this.context.createGain();
     this.panNode = this.context.createStereoPanner();
-    this.status = AudioTrackStatus.stoped;
+    this.scriptNode =  this.context.createScriptProcessor();
 
-    this.source.buffer = buffer;
+    this.source.connect(this.scriptNode);
     this.source.connect(this.gainNode);
     this.gainNode.connect(this.crossafaderGainNode);
     this.crossafaderGainNode.connect(this.panNode);
     this.panNode.connect(this.context.destination);
 
-    this.source.onended = event =>{
-      this.stop();
-    }
+    this.audioTimeManager.onStoped = manager => {
+      const buffer = this.source.buffer;
 
-    console.log(this.uploadedListeners.length);
+      this.source.disconnect(this.scriptNode);
+      this.source.disconnect(this.gainNode);
+
+      this.source = this.context.createBufferSource();
+      this.source.buffer = buffer;
+
+      this.source.connect(this.scriptNode);
+      this.source.connect(this.gainNode);
+
+      manager.loadSource(this.source);
+    };
+  }
+
+  load(buffer){
+    this.source.buffer = buffer;
+    this.audioTimeManager.loadSource(this.source, buffer);
+
     for (var i = 0; i < this.uploadedListeners.length; i++){
       this.uploadedListeners[i](this);
     }
-  }
-
-  play(){
-    if (this.status === AudioTrackStatus.stoped){
-      this.createAudioSource(this.context, this.buffer);
-      this.source.start();
-    } else if (this.status === AudioTrackStatus.suspended) {
-      this.context.resume();
-    } else {
-      return;
-    }
-    this.status = AudioTrackStatus.played;
-  }
-
-  pause(){
-    if (this.status == AudioTrackStatus.played){
-      this.context.suspend();
-      this.status = AudioTrackStatus.suspended;
-    }
-  }
-
-  stop(){
-    this.source.stop();
-    if (this.status == AudioTrackStatus.suspended){
-      this.context.resume();
-    }
-    this.status = AudioTrackStatus.stoped;
   }
 
   setGain(value){
@@ -91,9 +76,6 @@ class AudioSource {
     return this.source.playbackRate.value;
   }
 
-  isReadyForPlayed(){
-    return this.source != null;
-  }
 
   getContext(){
     return this.context;
@@ -116,6 +98,12 @@ class AudioSource {
   addUploadListener(listener){
     this.uploadedListeners.push(listener);
   }
+
+  getAudioTimeManger(){
+    return this.audioTimeManager;
+  }
+
+
 }
 
 var AudioTrackStatus = Object.freeze({

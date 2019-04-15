@@ -1,7 +1,6 @@
 import React from 'react'
 
 import '../styles/index.css'
-import AudioSource from '../infrastructure/AudioSource'
 
 import WaveformData from 'waveform-data'
 
@@ -25,7 +24,7 @@ class AudioPlayer extends React.Component {
       speed: 1
     }
     this.state.audioSource.addUploadListener(audioSource =>{
-      const speed = Number(document.getElementById(SPEED_SLIEDR_NAME + 
+      const speed = Number(document.getElementById(SPEED_SLIEDR_NAME +
                                                    this.state.id).value);
       audioSource.setSpeed(speed);
     });
@@ -43,9 +42,7 @@ class AudioPlayer extends React.Component {
   resetSpeed(){
     let audioSource = this.state.audioSource;
     this.setState({speed: 1});
-    if (audioSource != null && audioSource.isReadyForPlayed()){
-      this.state.audioSource.setSpeed(1);
-    }
+    this.state.audioSource.setSpeed(1);
   }
 
   smoothResetSpeed() {
@@ -94,6 +91,11 @@ class AudioPlayer extends React.Component {
 
   }
 
+  showValue(value){
+    console.log(value);
+    this.state.audioSource.setLoop(Number(value));
+  }
+
   render(){
     let audioSource = this.state.audioSource;
     let isLoaded = this.state.isLoaded;
@@ -108,12 +110,16 @@ class AudioPlayer extends React.Component {
               onChange={() => this.loadAuio()} />
             <h3 id={STATUS_TEXT_NAME + id}>Audio loading</h3>
           </div>
+
           <div className='center'>
-            <button id={PLAY_BUTTON_NAME + id} onClick={() => audioSource.play()}
+            <button id={PLAY_BUTTON_NAME + id}
+              onClick={() => audioSource.getAudioTimeManger().play()}
               className='margined'  disabled={isLoaded ? false : true}>Play</button>
-            <button id={STOP_BUTTON_NAME + id} onClick={() => audioSource.stop()}
+            <button id={STOP_BUTTON_NAME + id}
+              onClick={() => audioSource.getAudioTimeManger().stop()}
               className='margined'  disabled={isLoaded ? false : true}>Stop</button>
-            <button id={PAUSE_BUTTON_NAME + id} onClick={() => audioSource.pause()}
+            <button id={PAUSE_BUTTON_NAME + id}
+              onClick={() => audioSource.getAudioTimeManger().pause()}
               className='margined'  disabled={isLoaded ? false : true}>Pause</button>
             <div>
               <div>
@@ -129,6 +135,19 @@ class AudioPlayer extends React.Component {
               <div>
                 <button onClick={() => this.smoothResetSpeed()}>Reset speed</button>
               </div>
+            </div>
+            <div className='center'>
+              <h3>Looping</h3>
+              <input type='button' value='1/2'
+                onClick={event => this.showValue(event.target.value)}/>
+              <input type='button' value='1'
+                onClick={event => this.showValue(event.target.value)}/>
+              <input type='button' value='2'
+                onClick={event => this.showValue(event.target.value)}/>
+              <input type='button' value='4'
+                onClick={event => this.showValue(event.target.value)}/>
+              <input type='button' value='8'
+                onClick={event => this.showValue(event.target.value)}/>
             </div>
           </div>
       );
