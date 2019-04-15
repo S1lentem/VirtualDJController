@@ -87,21 +87,17 @@ class AudioPlayer extends React.Component {
     reader.readAsArrayBuffer(files[0]);
   }
 
-  updataAudioData(audioSource){
-
+  setLoop(value){
+    this.state.audioSource.getAudioTimeManger().setLoop(value);
   }
 
-  showValue(value){
-    console.log(value);
-    this.state.audioSource.setLoop(Number(value));
-  }
 
   render(){
-    let audioSource = this.state.audioSource;
-    let isLoaded = this.state.isLoaded;
-    let id = this.state.id;
-
+    const audioSource = this.state.audioSource;
+    const isLoaded = this.state.isLoaded;
+    const id = this.state.id;
     const speed = this.state.speed;
+
     return (
         <div>
           <div className='center'>
@@ -139,15 +135,15 @@ class AudioPlayer extends React.Component {
             <div className='center'>
               <h3>Looping</h3>
               <input type='button' value='1/2'
-                onClick={event => this.showValue(event.target.value)}/>
+                onClick={event => this.setLoop(Number(event.target.value))}/>
               <input type='button' value='1'
-                onClick={event => this.showValue(event.target.value)}/>
+                onClick={event => this.setLoop(Number(event.target.value))}/>
               <input type='button' value='2'
-                onClick={event => this.showValue(event.target.value)}/>
+                onClick={event => this.setLoop(Number(event.target.value))}/>
               <input type='button' value='4'
-                onClick={event => this.showValue(event.target.value)}/>
+                onClick={event => this.setLoop(Number(event.target.value))}/>
               <input type='button' value='8'
-                onClick={event => this.showValue(event.target.value)}/>
+                onClick={event => this.setLoop(Number(event.target.value))}/>
             </div>
           </div>
       );

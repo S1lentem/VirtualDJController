@@ -76,7 +76,6 @@ class AudioSource {
     return this.source.playbackRate.value;
   }
 
-
   getContext(){
     return this.context;
   }

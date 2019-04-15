@@ -7,6 +7,9 @@ class AudioTimeManager {
 
     this.source = null;
     this.buffer = null;
+
+    this.dateStarted = null;
+    this
   }
 
   loadSource(source){
@@ -18,7 +21,7 @@ class AudioTimeManager {
 
   play(){
     if (this.status === AudioTrackStatus.stoped){
-      console.log('start')
+      this.dateStarted = new Date();
       this.source.start();
     } else if (this.status === AudioTrackStatus.suspended){
       this.audioContext.resume();
@@ -44,10 +47,14 @@ class AudioTimeManager {
 
     if (this.onStoped !== undefined){
       this.onStoped(this);
+
     }
   }
 
   setLoop(loopValue){
+    console.log(typeof this);
+    console.log(this.dateStarted);
+
     const currentTime = (new Date() - this.dateStarted) / 1000;
     this.source.loopStart = currentTime;
     this.source.loopEnd = currentTime + loopValue;
