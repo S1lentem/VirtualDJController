@@ -2,18 +2,24 @@ class AudioTimeManager {
   constructor(audioContext, id){
     this.audioContext = audioContext;
     this.id = id;
-    this.isLooping = false;
     this.status = AudioTrackStatus.stoped;
 
-    this.source = null;
-    this.buffer = null;
 
-    this.dateStarted = null;
+    this.isLoop = false;
+    this.startLoopTime = null;
+    this.endLoopTime = null;
+    this.loopTime = null;
   }
 
   loadSource(media){
-    console.log(media);
     this.media = media;
+    this.media.ontimeupdate = evet => {
+      if (this.isLoop){
+        if (this.media.currentTime >= this.endLoopTime){
+          this.media.currentTime = this.startLoopTime;
+        }
+      }
+    }
   }
 
   play(){
@@ -29,19 +35,30 @@ class AudioTimeManager {
     this.media.currentTime = 0;
   }
 
-  // setLoop(loopValue){
-  //   console.log(typeof this);
-  //   console.log(this.dateStarted);
-  //
-  //   const currentTime = (new Date() - this.dateStarted) / 1000;
-  //   this.source.loopStart = currentTime;
-  //   this.source.loopEnd = currentTime + loopValue;
-  //   this.source.loop = true;
-  // }
-  //
-  // resetLoop(){
-  //   this.source.loop = false;
-  // }
+  setLoop(value){
+    console.log(value);
+    this.isLoop = true;
+    if (this.startLoopTime == null) {
+      this.startLoopTime = this.media.currentTime;
+    }
+    this.endLoopTime = this.startLoopTime + value;
+    this.loopTime = value;
+  }
+
+  resetLoop(){
+    this.isLoop = false;
+    this.startLoopTime = null;
+    this.endLoopTime = null;
+    this.loopTime = null;
+  }
+
+  isLooping(){
+    return this.isLoop;
+  }
+
+  getLoopTime(){
+    return this.loopTime;
+  }
 }
 
 

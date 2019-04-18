@@ -88,7 +88,11 @@ class AudioPlayer extends React.Component {
   }
 
   setLoop(value){
-    this.state.audioSource.getAudioTimeManger().setLoop(value);
+    if (this.state.audioSource.getAudioTimeManger().getLoopTime() != value){
+      this.state.audioSource.getAudioTimeManger().setLoop(value);
+    } else {
+      this.state.audioSource.getAudioTimeManger().resetLoop();
+    }
   }
 
 
@@ -119,7 +123,7 @@ class AudioPlayer extends React.Component {
               className='margined'  disabled={isLoaded ? false : true}>Pause</button>
             <div>
               <div>
-                <audio id={AUDIO_TAG + id} controls />
+                <audio id={AUDIO_TAG + id} />
               </div>
               <div>
                 <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
@@ -138,7 +142,7 @@ class AudioPlayer extends React.Component {
             <div className='center'>
               <h3>Looping</h3>
               <input type='button' value='1/2'
-                onClick={event => this.setLoop(Number(event.target.value))}/>
+                onClick={event => this.setLoop(0.5)}/>
               <input type='button' value='1'
                 onClick={event => this.setLoop(Number(event.target.value))}/>
               <input type='button' value='2'
