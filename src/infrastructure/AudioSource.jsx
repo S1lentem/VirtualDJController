@@ -26,11 +26,6 @@ class AudioSource {
     this.media = media;
     this.media.src = url;
 
-    this.media.ontimeupdate = evet => {
-        if (this.media.currentTime >= 5){
-          this.media.currentTime = 0;
-        }
-    }
 
     source.connect(this.scriptNode);
     source.connect(this.gainNode);
