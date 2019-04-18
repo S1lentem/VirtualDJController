@@ -9,65 +9,39 @@ class AudioTimeManager {
     this.buffer = null;
 
     this.dateStarted = null;
-    this
   }
 
-  loadSource(source){
-    this.source = source;
-    this.source.onended = event =>{
-      this.stop();
-    }
+  loadSource(media){
+    console.log(media);
+    this.media = media;
   }
 
   play(){
-    if (this.status === AudioTrackStatus.stoped){
-      this.dateStarted = new Date();
-      this.source.start();
-    } else if (this.status === AudioTrackStatus.suspended){
-      this.audioContext.resume();
-    } else {
-      return;
-    }
-    this.status = AudioTrackStatus.played;
+    this.media.play();
   }
 
   pause(){
-    if (this.status === AudioTrackStatus.played){
-      this.audioContext.suspend();
-      this.status = AudioTrackStatus.suspended;
-    }
+    this.media.pause();
   }
 
   stop() {
-    this.source.stop();
-    if (this.status === AudioTrackStatus.suspended){
-      this.audioContext.resume();
-    }
-    this.status = AudioTrackStatus.stoped;
-
-    if (this.onStoped !== undefined){
-      this.onStoped(this);
-
-    }
+    this.pause();
+    this.media.currentTime = 0;
   }
 
-  setLoop(loopValue){
-    console.log(typeof this);
-    console.log(this.dateStarted);
-
-    const currentTime = (new Date() - this.dateStarted) / 1000;
-    this.source.loopStart = currentTime;
-    this.source.loopEnd = currentTime + loopValue;
-    this.source.loop = true;
-  }
-
-  resetLoop(){
-    this.source.loop = false;
-  }
-
-  getAudioTimeManger(){
-    return this.audioTimeManager;
-  }
+  // setLoop(loopValue){
+  //   console.log(typeof this);
+  //   console.log(this.dateStarted);
+  //
+  //   const currentTime = (new Date() - this.dateStarted) / 1000;
+  //   this.source.loopStart = currentTime;
+  //   this.source.loopEnd = currentTime + loopValue;
+  //   this.source.loop = true;
+  // }
+  //
+  // resetLoop(){
+  //   this.source.loop = false;
+  // }
 }
 
 

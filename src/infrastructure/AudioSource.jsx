@@ -8,41 +8,33 @@ class AudioSource {
   constructor(id){
     this.context = new window.AudioContext();
     this.id = id;
-
     this.uploadedListeners = [];
     this.audioTimeManager = new AudioTimeManager(this.context, this.id);
 
-    this.source = this.context.createBufferSource();
     this.gainNode = this.context.createGain();
     this.crossafaderGainNode = this.context.createGain();
     this.panNode = this.context.createStereoPanner();
     this.scriptNode =  this.context.createScriptProcessor();
 
-    this.source.connect(this.scriptNode);
-    this.source.connect(this.gainNode);
     this.gainNode.connect(this.crossafaderGainNode);
     this.crossafaderGainNode.connect(this.panNode);
     this.panNode.connect(this.context.destination);
-
-    this.audioTimeManager.onStoped = manager => {
-      const buffer = this.source.buffer;
-
-      this.source.disconnect(this.scriptNode);
-      this.source.disconnect(this.gainNode);
-
-      this.source = this.context.createBufferSource();
-      this.source.buffer = buffer;
-
-      this.source.connect(this.scriptNode);
-      this.source.connect(this.gainNode);
-
-      manager.loadSource(this.source);
-    };
   }
 
-  load(buffer){
-    this.source.buffer = buffer;
-    this.audioTimeManager.loadSource(this.source, buffer);
+  load(url, media){
+    const source = this.context.createMediaElementSource(media);
+    this.media = media;
+    this.media.src = url;
+
+    this.media.ontimeupdate = evet => {
+        if (this.media.currentTime >= 5){
+          this.media.currentTime = 0;
+        }
+    }
+
+    source.connect(this.scriptNode);
+    source.connect(this.gainNode);
+    this.audioTimeManager.loadSource(this.media);
 
     for (var i = 0; i < this.uploadedListeners.length; i++){
       this.uploadedListeners[i](this);
@@ -54,26 +46,21 @@ class AudioSource {
   }
 
   setSpeed(value){
-    if (this.source !== undefined){
-      this.source.playbackRate.value = value;
+    if (this.media){
+      this.media.playbackRate = value;
     }
   }
 
   setPanned(value){
-    if (this.source !== undefined){
-      this.panNode.pan.value = value;
-    }
+    this.panNode.pan.value = value;
   }
 
   addSpeed(value){
-    this.source.playbackRate.value += value;
+    this.media.playbackRate += value;
   }
 
   getSpeed(){
-    if (this.source === undefined){
-      return undefined;
-    }
-    return this.source.playbackRate.value;
+    return this.media.playbackRate;
   }
 
   getContext(){
@@ -89,7 +76,7 @@ class AudioSource {
   }
 
   setCrossfaderGain(value){
-    if (this.crossafaderGainNode !== undefined){
+    if (!this.crossafaderGainNode){
       this.crossafaderGainNode.gain.value = value;
     }
   }

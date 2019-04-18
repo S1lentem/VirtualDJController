@@ -11,6 +11,7 @@ const PLAY_BUTTON_NAME = 'play';
 const STOP_BUTTON_NAME = 'stop';
 const PAUSE_BUTTON_NAME = 'pause';
 const LOAD_AUDIO_BUTTON = 'load_audio';
+const AUDIO_TAG = 'audio'
 const WAVEFORM_CANVAS = 'waveform';
 
 class AudioPlayer extends React.Component {
@@ -75,16 +76,15 @@ class AudioPlayer extends React.Component {
     const reader = new FileReader();
     const webAudioBuilder = require('waveform-data/webaudio');
     const audioContext = this.state.audioSource.getContext();
+    const mediaElement = document.getElementById(AUDIO_TAG + this.state.id);
+    alert(mediaElement);
     reader.onload = ev => {
-      audioContext.decodeAudioData(ev.target.result).then(buffer => {
-        this.state.audioSource.load(buffer);
-        this.setState({
-          isLoaded: true
-        });
-      }, false);
-
+      this.state.audioSource.load(ev.target.result, mediaElement);
+      this.setState({
+        isLoaded: true
+      });
     }
-    reader.readAsArrayBuffer(files[0]);
+    reader.readAsDataURL(files[0]);
   }
 
   setLoop(value){
@@ -118,6 +118,9 @@ class AudioPlayer extends React.Component {
               onClick={() => audioSource.getAudioTimeManger().pause()}
               className='margined'  disabled={isLoaded ? false : true}>Pause</button>
             <div>
+              <div>
+                <audio id={AUDIO_TAG + id} controls />
+              </div>
               <div>
                 <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
                     value={speed} onInput={() => this.changeSpeed()}
