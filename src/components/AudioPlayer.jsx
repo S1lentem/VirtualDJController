@@ -11,6 +11,7 @@ const PLAY_BUTTON_NAME = 'play';
 const STOP_BUTTON_NAME = 'stop';
 const PAUSE_BUTTON_NAME = 'pause';
 const LOAD_AUDIO_BUTTON = 'load_audio';
+const AUDIO_TAG = 'audio'
 const WAVEFORM_CANVAS = 'waveform';
 
 class AudioPlayer extends React.Component {
@@ -75,20 +76,23 @@ class AudioPlayer extends React.Component {
     const reader = new FileReader();
     const webAudioBuilder = require('waveform-data/webaudio');
     const audioContext = this.state.audioSource.getContext();
+    const mediaElement = document.getElementById(AUDIO_TAG + this.state.id);
+    alert(mediaElement);
     reader.onload = ev => {
-      audioContext.decodeAudioData(ev.target.result).then(buffer => {
-        this.state.audioSource.load(buffer);
-        this.setState({
-          isLoaded: true
-        });
-      }, false);
-
+      this.state.audioSource.load(ev.target.result, mediaElement);
+      this.setState({
+        isLoaded: true
+      });
     }
-    reader.readAsArrayBuffer(files[0]);
+    reader.readAsDataURL(files[0]);
   }
 
   setLoop(value){
-    this.state.audioSource.getAudioTimeManger().setLoop(value);
+    if (this.state.audioSource.getAudioTimeManger().getLoopTime() != value){
+      this.state.audioSource.getAudioTimeManger().setLoop(value);
+    } else {
+      this.state.audioSource.getAudioTimeManger().resetLoop();
+    }
   }
 
 
@@ -119,6 +123,9 @@ class AudioPlayer extends React.Component {
               className='margined'  disabled={isLoaded ? false : true}>Pause</button>
             <div>
               <div>
+                <audio id={AUDIO_TAG + id} />
+              </div>
+              <div>
                 <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
                     value={speed} onInput={() => this.changeSpeed()}
                     onDoubleClick={() => this.resetSpeed()}
@@ -135,7 +142,7 @@ class AudioPlayer extends React.Component {
             <div className='center'>
               <h3>Looping</h3>
               <input type='button' value='1/2'
-                onClick={event => this.setLoop(Number(event.target.value))}/>
+                onClick={event => this.setLoop(0.5)}/>
               <input type='button' value='1'
                 onClick={event => this.setLoop(Number(event.target.value))}/>
               <input type='button' value='2'

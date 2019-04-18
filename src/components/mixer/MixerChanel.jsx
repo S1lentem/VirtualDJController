@@ -25,7 +25,7 @@ class MixerChannel extends React.Component {
 
   changeGain(){
     let audioSource = this.state.source;
-    if (audioSource != null && audioSource.isReadyForPlayed()){
+    if (audioSource){
       let currentGain = document.getElementById(GAIN_SLIEDR_NAME + audioSource.getId()).value;
       audioSource.setGain(currentGain);
     }
