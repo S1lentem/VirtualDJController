@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../../styles/index.css'
+// import '../../styles/index.css'
 
 const GAIN_SLIEDR_NAME = 'gain';
 const PAN_SLIDER_NAME = 'pan';

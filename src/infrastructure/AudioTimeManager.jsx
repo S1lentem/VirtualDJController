@@ -14,10 +14,8 @@ class AudioTimeManager {
   loadSource(media){
     this.media = media;
     this.media.ontimeupdate = evet => {
-      if (this.isLoop){
-        if (this.media.currentTime >= this.endLoopTime){
-          this.media.currentTime = this.startLoopTime;
-        }
+      if (this.isLoop && this.media.currentTime >= this.endLoopTime){
+        this.media.currentTime = this.startLoopTime;
       }
     }
   }

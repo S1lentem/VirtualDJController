@@ -1,10 +1,11 @@
 import React from 'react'
 
-import AudioPlayer from './AudioPlayer'
-import Mixer from './mixer/Mixer'
-import AudioSource from '../infrastructure/AudioSource'
+import AudioPlayer from '../AudioPlayer/AudioPlayer.jsx'
+import Mixer from '../Mixer/Mixer'
+import AudioSource from '../../infrastructure/AudioSource'
 
-import '../styles/index.css'
+// import '../../styles/index.css'
+import './Controller.css'
 
 const audio1Path = 'tst.mp3'
 const audio2Path = 'tst2.mp3'
