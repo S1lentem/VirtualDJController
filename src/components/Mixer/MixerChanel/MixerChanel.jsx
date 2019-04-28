@@ -1,12 +1,11 @@
 import React from 'react'
+import Frequencies from './FrequencyComponent/Frequencies'
 
-// import '../../styles/index.css'
+
+import './MixerChanel.css'
 
 const GAIN_SLIEDR_NAME = 'gain';
 const PAN_SLIDER_NAME = 'pan';
-const HI_FREQUENCY_NAME = 'hi';
-const MID_FREQUENCY_NAME = 'mid';
-const LOW_FREQUENCY_NAME = 'low';
 
 class MixerChannel extends React.Component {
   constructor(props){
@@ -45,26 +44,6 @@ class MixerChannel extends React.Component {
     this.setState({pan: currentPan});
   }
 
-  changeLowFrequency(){
-    const id = this.state.id;
-    const currentLowFrequency = Number(
-      document.getElementById(LOW_FREQUENCY_NAME + id).vlaue);
-    this.setState({low: currentLowFrequency});
-  }
-
-  changeMidFrequency(){
-    const id = this.state.id;
-    const currentMidFrequency = Number(
-      document.getElementById(MID_FREQUENCY_NAME + id).vlaue);
-    this.setState({mid: currentMidFrequency});
-  }
-
-  changeHiFrequency(){
-    const id = this.state.id;
-    const currentHiFrequency = Number(
-      document.getElementById(HI_FREQUENCY_NAME + id).vlaue);
-    this.setState({hi: currentHiFrequency});
-  }
 
 
   render(){
@@ -73,33 +52,9 @@ class MixerChannel extends React.Component {
 
     return (
       <div>
-        <div>
-          <div className='center'>
-            <label htmlFor={HI_FREQUENCY_NAME + id}>HI</label>
-          </div>
-          <div>
-            <input id={HI_FREQUENCY_NAME + id} value={this.state.hi}
-              type='range' min='-1' max='1' step='0.0078125'/>
-          </div>
-        </div>
-        <div>
-          <div className='center'>
-            <label htmlFor={MID_FREQUENCY_NAME + id}>MID</label>
-          </div>
-          <div>
-            <input id={MID_FREQUENCY_NAME + id} value={this.state.mid}
-              type='range' min='-1' max='1' step='0.0078125'/>
-          </div>
-        </div>
-        <div>
-          <div className='center'>
-            <label htmlFor={LOW_FREQUENCY_NAME + id}>LOW</label>
-          </div>
-          <div>
-            <input id={LOW_FREQUENCY_NAME + id} value={this.state.low}
-              type='range' min='-1' max='1' step='0.0078125'/>
-          </div>
-        </div>
+
+        <Frequencies source={this.state.source} />
+
         <div className='center'>
           <label htmlFor={GAIN_SLIEDR_NAME + id}>Volume</label>
         </div>
@@ -108,7 +63,6 @@ class MixerChannel extends React.Component {
             onInput={() => this.changeGain()}
             min='0' max='1.25' step='0.0125'/>
         </div>
-
         <div>
           <div className='center'>
             <label htmlFor={PAN_SLIDER_NAME + id}>Balance</label>

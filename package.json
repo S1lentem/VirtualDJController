@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "react": "^16.8.4",
+    "react-circle-slider": "^1.6.2",
     "react-dom": "^16.8.4",
     "react-native-circular-slider": "^1.0.1",
     "react-native-svg": "^9.3.7",
     "react-scripts": "2.1.8",
-    "waveform-data": "^2.1.2"
+    "waveform-data": "^2.1.2",
+    "web-audio-beat-detector": "^7.0.40"
   },
   "scripts": {
     "start": "react-scripts start",

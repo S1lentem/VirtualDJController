@@ -1,7 +1,7 @@
 import React from 'react'
 import MixerChannel from './MixerChanel/MixerChanel.jsx'
 
-// import '../../styles/index.css'
+import './Mixer.css'
 
 class Mixer extends React.Component {
   constructor (props){
