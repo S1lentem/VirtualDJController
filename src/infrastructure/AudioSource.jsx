@@ -84,8 +84,8 @@ class AudioSource {
     return this.audioTimeManager;
   }
 
-  getAudioUrl(){
-    return this.media.src;
+  getMedia(){
+    return this.media;
   }
 }
 

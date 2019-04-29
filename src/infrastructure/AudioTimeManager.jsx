@@ -61,6 +61,14 @@ class AudioTimeManager {
     this.bpm = bpm;
     this.tackt = 60 / bpm * 4
   }
+
+  getDuration(){
+    return this.media.duration;
+  }
+
+  getCurrentTime(){
+    return this.media.currentTime;
+  }
 }
 
 

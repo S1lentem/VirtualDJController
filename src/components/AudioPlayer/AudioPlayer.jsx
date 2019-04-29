@@ -79,9 +79,6 @@ class AudioPlayer extends React.Component {
     const files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
     const mediaElement = document.getElementById(AUDIO_TAG + this.state.id);
 
-
-    // });
-
     reader.onload = ev => {
       const result = ev.target.result
       this.state.audioSource.load(result, mediaElement);
@@ -96,7 +93,10 @@ class AudioPlayer extends React.Component {
           .audioSource.getAudioTimeManger().setBPM(bpm));
       });
     }
+
+
     arrayBufferReader.readAsArrayBuffer(files[0]);
+
   }
 
   setLoop(value){
@@ -113,6 +113,8 @@ class AudioPlayer extends React.Component {
     const isLoaded = this.state.isLoaded;
     const id = this.state.id;
     const speed = this.state.speed;
+
+
 
     return (
         <div>

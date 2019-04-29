@@ -1,7 +1,7 @@
 import React from 'react'
 import WaveSurfer from 'wavesurfer.js'
 
-const WAVEFORM_CANVAS = 'wave';
+const WAVEFORM_CANVAS = 'waveform';
 
 class Waveform extends React.Component{
   constructor(props){
@@ -9,7 +9,9 @@ class Waveform extends React.Component{
     const id = props.audioSource.getId();
     this.state = {
       audioSource: props.audioSource,
-      waveform: null
+      waveform: null,
+      currentTime: 0,
+      isSeek: false
     }
 
     this.state.audioSource.addUploadListener(audioSource => {
@@ -19,8 +21,27 @@ class Waveform extends React.Component{
         progressColor: '#DC143C',
         height: 64
       });
-      wavesurfer.load(audioSource.getAudioUrl());
-      this.setState({waveform: wavesurfer})
+
+      document.getElementById(WAVEFORM_CANVAS + id).addEventListener('click', event =>{
+        this.setState({isSeek: true});
+      });
+
+      const media = audioSource.getMedia()
+      wavesurfer.on('seek', () => {
+        if (this.state.isSeek){
+          media.currentTime = wavesurfer.getCurrentTime();
+          this.setState({isSeek: false});
+        }
+      });
+
+      media.addEventListener('timeupdate', event => {
+        let currentTime = audioSource.getAudioTimeManger().getCurrentTime();
+        let duration = audioSource.getAudioTimeManger().getDuration();
+        wavesurfer.seekTo(currentTime / duration);
+      });
+
+      wavesurfer.load(media.src);
+      this.setState({waveform: wavesurfer});;
     });
   }
 
