@@ -34,12 +34,11 @@ class AudioTimeManager {
   }
 
   setLoop(value){
-    console.log(value);
     this.isLoop = true;
     if (this.startLoopTime == null) {
       this.startLoopTime = this.media.currentTime;
     }
-    this.endLoopTime = this.startLoopTime + value;
+    this.endLoopTime = this.startLoopTime + (value * this.tackt);
     this.loopTime = value;
   }
 
@@ -56,6 +55,11 @@ class AudioTimeManager {
 
   getLoopTime(){
     return this.loopTime;
+  }
+
+  setBPM(bpm){
+    this.bpm = bpm;
+    this.tackt = 60 / bpm * 4
   }
 }
 

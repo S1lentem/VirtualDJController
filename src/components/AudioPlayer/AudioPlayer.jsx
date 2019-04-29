@@ -1,8 +1,11 @@
 import React from 'react'
+import WaveSurfer from 'wavesurfer.js'
+import { guess } from 'web-audio-beat-detector';
 
-// import '../styles/index.css'
+import Waveform from'./Waveform/Waveform'
 
-import WaveformData from 'waveform-data'
+import './AudioPlayer.css'
+
 
 const SPEED_SLIEDR_NAME = 'speed';
 const GAIN_SLIEDR_NAME = 'gain';
@@ -12,7 +15,6 @@ const STOP_BUTTON_NAME = 'stop';
 const PAUSE_BUTTON_NAME = 'pause';
 const LOAD_AUDIO_BUTTON = 'load_audio';
 const AUDIO_TAG = 'audio'
-const WAVEFORM_CANVAS = 'waveform';
 
 class AudioPlayer extends React.Component {
   constructor(props){
@@ -72,19 +74,29 @@ class AudioPlayer extends React.Component {
   }
 
   loadAuio(){
-    const files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
     const reader = new FileReader();
-    const webAudioBuilder = require('waveform-data/webaudio');
-    const audioContext = this.state.audioSource.getContext();
+    const arrayBufferReader = new FileReader();
+    const files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
     const mediaElement = document.getElementById(AUDIO_TAG + this.state.id);
-    alert(mediaElement);
+
+
+    // });
+
     reader.onload = ev => {
-      this.state.audioSource.load(ev.target.result, mediaElement);
-      this.setState({
-        isLoaded: true
-      });
+      const result = ev.target.result
+      this.state.audioSource.load(result, mediaElement);
+      this.setState({isLoaded: true});
     }
     reader.readAsDataURL(files[0]);
+
+    arrayBufferReader.onload = event => {
+      alert(typeof event.target.result);
+      this.state.audioSource.getContext().decodeAudioData(event.target.result, buffer => {
+        guess(buffer).then(({bpm, offset}) => this.state
+          .audioSource.getAudioTimeManger().setBPM(bpm));
+      });
+    }
+    arrayBufferReader.readAsArrayBuffer(files[0]);
   }
 
   setLoop(value){
@@ -110,7 +122,7 @@ class AudioPlayer extends React.Component {
               onChange={() => this.loadAuio()} />
             <h3 id={STATUS_TEXT_NAME + id}>Audio loading</h3>
           </div>
-
+          <Waveform audioSource={audioSource} />
           <div className='center'>
             <button id={PLAY_BUTTON_NAME + id}
               onClick={() => audioSource.getAudioTimeManger().play()}

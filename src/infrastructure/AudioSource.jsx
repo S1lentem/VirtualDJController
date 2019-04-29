@@ -84,7 +84,9 @@ class AudioSource {
     return this.audioTimeManager;
   }
 
-
+  getAudioUrl(){
+    return this.media.src;
+  }
 }
 
 var AudioTrackStatus = Object.freeze({
