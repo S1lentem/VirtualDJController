@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AudioPlayer from '../AudioPlayer/AudioPlayer.jsx'
+import AudioPlayer from '../AudioPlayer/AudioPlayer'
 import Mixer from '../Mixer/Mixer'
 import AudioSource from '../../infrastructure/AudioSource'
 

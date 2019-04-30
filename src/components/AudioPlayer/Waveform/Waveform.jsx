@@ -30,14 +30,17 @@ class Waveform extends React.Component{
       wavesurfer.on('seek', () => {
         if (this.state.isSeek){
           media.currentTime = wavesurfer.getCurrentTime();
-          this.setState({isSeek: false});
         }
       });
 
       media.addEventListener('timeupdate', event => {
-        let currentTime = audioSource.getAudioTimeManger().getCurrentTime();
-        let duration = audioSource.getAudioTimeManger().getDuration();
-        wavesurfer.seekTo(currentTime / duration);
+        if (this.state.isSeek){
+          this.setState({isSeek: false});
+        } else {
+          let currentTime = audioSource.getAudioTimeManger().getCurrentTime();
+          let duration = audioSource.getAudioTimeManger().getDuration();
+          wavesurfer.seekTo(currentTime / duration);
+        }
       });
 
       wavesurfer.load(media.src);

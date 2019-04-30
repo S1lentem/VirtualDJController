@@ -12,10 +12,7 @@ class MixerChannel extends React.Component {
     super(props);
     this.state  = {
       source: props.source,
-      pan: 0,
-      low: 0,
-      mid: 0,
-      hi: 0
+      pan: 0
     }
     this.state.source.addUploadListener(source => {
       const currentGain = Number(document

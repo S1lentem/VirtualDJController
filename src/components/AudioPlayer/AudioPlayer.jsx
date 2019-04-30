@@ -169,6 +169,11 @@ class AudioPlayer extends React.Component {
           </div>
       );
   }
+
+  componentDidMount(){
+
+  }
+
 }
 
 export default AudioPlayer;

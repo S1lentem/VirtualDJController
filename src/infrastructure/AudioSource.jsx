@@ -5,7 +5,7 @@ const defaultGain = 1;
 
 class AudioSource {
 
-  constructor(id){
+  constructor(id, media){
     this.context = new window.AudioContext();
     this.id = id;
     this.uploadedListeners = [];
@@ -14,7 +14,7 @@ class AudioSource {
     this.gainNode = this.context.createGain();
     this.crossafaderGainNode = this.context.createGain();
     this.panNode = this.context.createStereoPanner();
-    this.scriptNode =  this.context.createScriptProcessor();
+
 
     this.gainNode.connect(this.crossafaderGainNode);
     this.crossafaderGainNode.connect(this.panNode);
@@ -26,8 +26,6 @@ class AudioSource {
     this.media = media;
     this.media.src = url;
 
-
-    source.connect(this.scriptNode);
     source.connect(this.gainNode);
     this.audioTimeManager.loadSource(this.media);
 
