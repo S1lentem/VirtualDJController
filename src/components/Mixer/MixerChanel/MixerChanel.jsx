@@ -1,5 +1,5 @@
 import React from 'react'
-import Frequencies from './FrequencyComponent/Frequencies'
+import Frequencies from './Frequencies/Frequencies'
 
 
 import './MixerChanel.css'

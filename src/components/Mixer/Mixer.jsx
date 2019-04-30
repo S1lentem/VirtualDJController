@@ -8,9 +8,9 @@ class Mixer extends React.Component {
     super(props);
     this.state = {
       sources: props.audioSources,
-      crossfaderValue: 0
-      // leftPlayer: props.audioSources[0],
-      // rightPlayer: props.audioSources[1]
+      crossfaderValue: 0,
+      leftPlayer: props.audioSources[0],
+      rightPlayer: props.audioSources[1]
      }
    }
 

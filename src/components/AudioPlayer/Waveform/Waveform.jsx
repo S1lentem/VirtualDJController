@@ -15,43 +15,42 @@ class Waveform extends React.Component{
     }
 
     this.state.audioSource.addUploadListener(audioSource => {
-      const wavesurfer = WaveSurfer.create({
-        container: document.getElementById(WAVEFORM_CANVAS + id),
-        waveColor: '#696969',
-        progressColor: '#DC143C',
-        height: 64
-      });
-
-      document.getElementById(WAVEFORM_CANVAS + id).addEventListener('click', event =>{
-        this.setState({isSeek: true});
-      });
-
       const media = audioSource.getMedia()
-      wavesurfer.on('seek', () => {
-        if (this.state.isSeek){
-          media.currentTime = wavesurfer.getCurrentTime();
-        }
-      });
+      if (!this.state.waveform) {
+        const wavesurfer = WaveSurfer.create({
+          container: document.getElementById(WAVEFORM_CANVAS + id),
+          waveColor: '#696969',
+          progressColor: '#DC143C',
+          height: 64
+        });
 
-      media.addEventListener('timeupdate', event => {
-        if (this.state.isSeek){
-          this.setState({isSeek: false});
-        } else {
-          let currentTime = audioSource.getAudioTimeManger().getCurrentTime();
-          let duration = audioSource.getAudioTimeManger().getDuration();
-          wavesurfer.seekTo(currentTime / duration);
-        }
-      });
+        wavesurfer.on('seek', () => {
+          if (this.state.isSeek){
+            media.currentTime = wavesurfer.getCurrentTime();
+          }
+        });
 
-      wavesurfer.load(media.src);
-      this.setState({waveform: wavesurfer});;
+        media.addEventListener('timeupdate', event => {
+          if (this.state.isSeek){
+            this.setState({isSeek: false});
+          } else {
+            let currentTime = audioSource.getAudioTimeManger().getCurrentTime();
+            let duration = audioSource.getAudioTimeManger().getDuration();
+            wavesurfer.seekTo(currentTime / duration);
+          }
+        });
+
+        this.setState({waveform: wavesurfer});
+      }
+      this.state.waveform.load(media.src);
     });
   }
 
   render(){
     const id = this.state.audioSource.getId();
     return (
-      <div id={WAVEFORM_CANVAS + id}>
+      <div id={WAVEFORM_CANVAS + id}
+          onClick={event => this.setState({isSeek: true})}>
       </div>
     );
   }

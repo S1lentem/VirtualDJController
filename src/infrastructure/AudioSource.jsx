@@ -1,4 +1,5 @@
 import AudioTimeManager from './AudioTimeManager'
+import FrequenciesManager from './FrequenciesManager'
 
 const defaultSpeed = 1;
 const defaultGain = 1;
@@ -9,26 +10,30 @@ class AudioSource {
     this.context = new window.AudioContext();
     this.id = id;
     this.uploadedListeners = [];
-    this.audioTimeManager = new AudioTimeManager(this.context, this.id);
 
     this.gainNode = this.context.createGain();
     this.crossafaderGainNode = this.context.createGain();
     this.panNode = this.context.createStereoPanner();
 
-
     this.gainNode.connect(this.crossafaderGainNode);
     this.crossafaderGainNode.connect(this.panNode);
-    this.panNode.connect(this.context.destination);
+
+    this.FrequenciesManager = new FrequenciesManager(this.context);
+    this.panNode.connect(this.FrequenciesManager.getFirstNode());
+    this.FrequenciesManager.getLastNode().connect(this.context.destination);
   }
 
-  load(url, media){
-    const source = this.context.createMediaElementSource(media);
+
+  linkToMediaElement(media){
+    this.audioTimeManager = new AudioTimeManager(this.context, this.id, media);
+    this.source = this.context.createMediaElementSource(media);
     this.media = media;
+
+    this.source.connect(this.gainNode);
+  }
+
+  load(url){
     this.media.src = url;
-
-    source.connect(this.gainNode);
-    this.audioTimeManager.loadSource(this.media);
-
     for (var i = 0; i < this.uploadedListeners.length; i++){
       this.uploadedListeners[i](this);
     }
@@ -82,7 +87,12 @@ class AudioSource {
     return this.audioTimeManager;
   }
 
+  getFrequencyManager(){
+    return this.FrequenciesManager;
+  }
+
   getMedia(){
+    alert(this.media);
     return this.media;
   }
 }

@@ -1,17 +1,14 @@
 class AudioTimeManager {
-  constructor(audioContext, id){
+  constructor(audioContext, id, media){
     this.audioContext = audioContext;
     this.id = id;
     this.status = AudioTrackStatus.stoped;
-
 
     this.isLoop = false;
     this.startLoopTime = null;
     this.endLoopTime = null;
     this.loopTime = null;
-  }
 
-  loadSource(media){
     this.media = media;
     this.media.ontimeupdate = evet => {
       if (this.isLoop && this.media.currentTime >= this.endLoopTime){

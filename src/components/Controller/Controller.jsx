@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AudioPlayer from '../AudioPlayer/AudioPlayer'
+import {AudioPlayer, AUDIO_TAG} from '../AudioPlayer/AudioPlayer'
 import Mixer from '../Mixer/Mixer'
 import AudioSource from '../../infrastructure/AudioSource'
 
@@ -13,9 +13,9 @@ const audio2Path = 'tst2.mp3'
 const COUNT_AUDIO_PLAYER = 2;
 
 class Controller extends React.Component {
-  render(){
-    const leftAudioPlayers = [];
-    const rightAudioPlayers = [];
+  constructor(props){
+    super(props);
+    const leftAudioPlayers = [], rightAudioPlayers = [];
     const audioSources = [];
     for (var i = 0; i < COUNT_AUDIO_PLAYER; i++){
       let audioSource = new AudioSource(i);
@@ -27,13 +27,29 @@ class Controller extends React.Component {
       audioSources.push(audioSource);
     }
 
+    this.state = {
+      audioSources: audioSources,
+      leftAudioPlayers: leftAudioPlayers,
+      rightAudioPlayers: rightAudioPlayers
+    }
+  }
+
+  render(){
     return (
       <div className='flexcontainer'>
-        {leftAudioPlayers}
-        <Mixer audioSources={audioSources} />
-        {rightAudioPlayers}
+        {this.state.leftAudioPlayers}
+        <Mixer audioSources={this.state.audioSources} />
+        {this.state.rightAudioPlayers}
       </div>
     );
+  }
+
+  componentDidMount(){
+    const audioSources = this.state.audioSources;
+    for (let i = 0; i < audioSources.length; i++){
+      const media = document.getElementById(AUDIO_TAG + audioSources[i].getId());
+      audioSources[i].linkToMediaElement(media);
+    }
   }
 }
 

@@ -22,21 +22,24 @@ class Frequencies extends React.Component {
   changeLowFrequency(){
     const id = this.state.id;
     const currentLowFrequency = Number(
-      document.getElementById(LOW_FREQUENCY_NAME + id).vlaue);
+      document.getElementById(LOW_FREQUENCY_NAME + id).value);
+    this.state.source.getFrequencyManager().setLowFrequency(currentLowFrequency);
     this.setState({low: currentLowFrequency});
   }
 
   changeMidFrequency(){
     const id = this.state.id;
     const currentMidFrequency = Number(
-      document.getElementById(MID_FREQUENCY_NAME + id).vlaue);
+      document.getElementById(MID_FREQUENCY_NAME + id).value);
+    this.state.source.getFrequencyManager().setMidFrequency(currentMidFrequency);
     this.setState({mid: currentMidFrequency});
   }
 
   changeHiFrequency(){
     const id = this.state.id;
     const currentHiFrequency = Number(
-      document.getElementById(HI_FREQUENCY_NAME + id).vlaue);
+      document.getElementById(HI_FREQUENCY_NAME + id).value);
+    this.state.source.getFrequencyManager().setHiFrequency(currentHiFrequency);
     this.setState({hi: currentHiFrequency});
   }
 
@@ -58,7 +61,7 @@ class Frequencies extends React.Component {
           </div>
           <div>
             <input id={HI_FREQUENCY_NAME + id} onInput={() => this.changeHiFrequency()}
-              type='range' min='-1' max='1' step='0.0078125' />
+              type='range' min='-10' max='10' step='0.0078125' />
           </div>
         </div>
         <div>
@@ -67,7 +70,7 @@ class Frequencies extends React.Component {
           </div>
           <div>
             <input id={MID_FREQUENCY_NAME + id} onInput={() => this.changeMidFrequency()}
-              type='range' min='-1' max='1' step='0.0078125'/>
+              type='range' min='-10' max='10' step='0.0078125'/>
           </div>
         </div>
         <div>
@@ -76,7 +79,7 @@ class Frequencies extends React.Component {
           </div>
           <div>
             <input id={LOW_FREQUENCY_NAME + id} onInput={() => this.changeLowFrequency()}
-              type='range' min='-1' max='1' step='0.0078125' />
+              type='range' min='-10' max='10' step='0.0078125' />
           </div>
         </div>
       </div>
