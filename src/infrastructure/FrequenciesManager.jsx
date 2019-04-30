@@ -3,13 +3,13 @@ class FrequenciesManager{
       this.low = audioContext.createBiquadFilter();
       this.low.type = 'lowshelf';
       this.low.frequency.value = 320.0;
-      this.low.gain.value = 10.0;
+      this.low.gain.value = 0.0;
 
       this.mid = audioContext.createBiquadFilter();
       this.mid.type = 'peaking';
       this.mid.frequency.value = 1000.0;
       this.mid.Q.value = 0.5;
-      this.mid.gain.value = 0.5;
+      this.mid.gain.value = 0.0;
 
       this.high = audioContext.createBiquadFilter();
       this.high.type = 'highshelf';
@@ -46,7 +46,7 @@ class FrequenciesManager{
     }
 
     getLowFrequency(){
-      return this.low.gain.value; 
+      return this.low.gain.value;
     }
 
     setLowFrequency(value){

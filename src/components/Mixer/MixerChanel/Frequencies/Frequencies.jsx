@@ -61,7 +61,8 @@ class Frequencies extends React.Component {
           </div>
           <div>
             <input id={HI_FREQUENCY_NAME + id} onInput={() => this.changeHiFrequency()}
-              type='range' min='-10' max='10' step='0.0078125' />
+              type='range' min='-10' max='10' step='0.0078125'
+              value={this.state.hi}/>
           </div>
         </div>
         <div>
@@ -70,7 +71,8 @@ class Frequencies extends React.Component {
           </div>
           <div>
             <input id={MID_FREQUENCY_NAME + id} onInput={() => this.changeMidFrequency()}
-              type='range' min='-10' max='10' step='0.0078125'/>
+              type='range' min='-10' max='10' step='0.0078125'
+              value={this.state.mid}/>
           </div>
         </div>
         <div>
@@ -79,7 +81,8 @@ class Frequencies extends React.Component {
           </div>
           <div>
             <input id={LOW_FREQUENCY_NAME + id} onInput={() => this.changeLowFrequency()}
-              type='range' min='-10' max='10' step='0.0078125' />
+              type='range' min='-10' max='10' step='0.0078125'
+              value={this.state.low}/>
           </div>
         </div>
       </div>
