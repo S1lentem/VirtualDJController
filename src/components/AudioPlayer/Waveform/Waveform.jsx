@@ -1,6 +1,8 @@
 import React from 'react'
 import WaveSurfer from 'wavesurfer.js'
 
+import './Waveform.css'
+
 const WAVEFORM_CANVAS = 'waveform';
 
 class Waveform extends React.Component{
@@ -49,7 +51,7 @@ class Waveform extends React.Component{
   render(){
     const id = this.state.audioSource.getId();
     return (
-      <div id={WAVEFORM_CANVAS + id}
+      <div id={WAVEFORM_CANVAS + id} className='waveform-container'
           onClick={event => this.setState({isSeek: true})}>
       </div>
     );

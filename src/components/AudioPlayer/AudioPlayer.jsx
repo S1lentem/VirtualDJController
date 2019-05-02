@@ -113,15 +113,20 @@ class AudioPlayer extends React.Component {
 
 
     return (
-        <div>
-          <div className='center'>
+        <div className='flex-item-center'>
+          <div className='audio-block'>
             <h1>Audio Player {id + 1}</h1>
-            <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
-              onChange={() => this.loadAuio()} />
-            <h3 id={STATUS_TEXT_NAME + id}>Audio loading</h3>
+            <div className='flex-container'>
+              <h3 id={STATUS_TEXT_NAME + id}>Audio not load</h3>
+              <label className='file-upload' value='Upload audio file'>
+                <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
+                  onChange={() => this.loadAuio()} />
+                Load audio
+              </label>
+            </div>
           </div>
           <Waveform audioSource={audioSource} />
-          <div className='center'>
+          <div className='conten-center audio-block'>
             <button id={PLAY_BUTTON_NAME + id}
               onClick={() => audioSource.getAudioTimeManger().play()}
               className='margined'  disabled={isLoaded ? false : true}>Play</button>
@@ -141,7 +146,7 @@ class AudioPlayer extends React.Component {
                     onDoubleClick={() => this.resetSpeed()}
                     min='0.5' max='1.5' step='0.0125'/>
                 </div>
-                <div className='center'>
+                <div className='conten-center'>
                   <label htmlFor={SPEED_SLIEDR_NAME + id}>Speed</label>
                 </div>
               </div>
@@ -149,7 +154,7 @@ class AudioPlayer extends React.Component {
                 <button onClick={() => this.smoothResetSpeed()}>Reset speed</button>
               </div>
             </div>
-            <div className='center'>
+            <div className='conten-center'>
               <h3>Looping</h3>
               <input type='button' value='1/2'
                 onClick={event => this.setLoop(0.5)}/>
@@ -166,7 +171,7 @@ class AudioPlayer extends React.Component {
       );
   }
 
-  
+
 
 }
 

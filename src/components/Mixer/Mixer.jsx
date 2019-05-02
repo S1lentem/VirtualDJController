@@ -40,7 +40,7 @@ class Mixer extends React.Component {
 
     return (
       <div>
-        <div className='flexcontainer'>
+        <div className='flex-container'>
           {chanels}
         </div>
         <div>

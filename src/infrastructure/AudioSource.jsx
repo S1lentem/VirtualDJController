@@ -92,7 +92,6 @@ class AudioSource {
   }
 
   getMedia(){
-    alert(this.media);
     return this.media;
   }
 }
