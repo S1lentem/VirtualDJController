@@ -56,7 +56,7 @@ class Frequencies extends React.Component {
           progressColor={null}/>
 
         <div>
-          <div className='center'>
+          <div className='content-center'>
             <label htmlFor={HI_FREQUENCY_NAME + id}>HI</label>
           </div>
           <div>
@@ -66,7 +66,7 @@ class Frequencies extends React.Component {
           </div>
         </div>
         <div>
-          <div className='center'>
+          <div className='content-center'>
             <label htmlFor={MID_FREQUENCY_NAME + id}>MID</label>
           </div>
           <div>
@@ -76,7 +76,7 @@ class Frequencies extends React.Component {
           </div>
         </div>
         <div>
-          <div className='center'>
+          <div className='content-center'>
             <label htmlFor={LOW_FREQUENCY_NAME + id}>LOW</label>
           </div>
           <div>

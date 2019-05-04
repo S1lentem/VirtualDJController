@@ -19,11 +19,13 @@ class Waveform extends React.Component{
     this.state.audioSource.addUploadListener(audioSource => {
       const media = audioSource.getMedia()
       if (!this.state.waveform) {
+        const color = audioSource.getId() % 2 === 0 ? '#DC143C' : '#004C99';
         const wavesurfer = WaveSurfer.create({
           container: document.getElementById(WAVEFORM_CANVAS + id),
           waveColor: '#696969',
-          progressColor: '#DC143C',
-          height: 64
+          progressColor: color,
+          height: 64,
+          hideScrollbar: true
         });
 
         wavesurfer.on('seek', () => {

@@ -24,7 +24,8 @@ class AudioPlayer extends React.Component {
       waveform: null,
       id: props.id,
       isLoaded: false,
-      speed: 1
+      speed: 1,
+      audioName: null
     }
     this.state.audioSource.addUploadListener(audioSource =>{
       const speed = Number(document.getElementById(SPEED_SLIEDR_NAME +
@@ -81,7 +82,11 @@ class AudioPlayer extends React.Component {
 
     reader.onload = ev => {
       this.state.audioSource.load(ev.target.result);
-      this.setState({isLoaded: true});
+      const audioName = files[0].name;
+      this.setState({
+        isLoaded: true,
+        audioName: audioName.substr(0, audioName.lastIndexOf('.')) || audioName
+      });
     }
     reader.readAsDataURL(files[0]);
 
@@ -109,15 +114,16 @@ class AudioPlayer extends React.Component {
     const isLoaded = this.state.isLoaded;
     const id = this.state.id;
     const speed = this.state.speed;
-
+    const audioName = this.state.audioName !== null ? this.state.audioName:
+      'Audio not load'
 
 
     return (
-        <div className='flex-item-center'>
+        <div className=''>
           <div className='audio-block'>
-            <h1>Audio Player {id + 1}</h1>
+            <h1 className='content-center'>Audio Player {id + 1}</h1>
             <div className='flex-container'>
-              <h3 id={STATUS_TEXT_NAME + id}>Audio not load</h3>
+              <h3 id={STATUS_TEXT_NAME + id}>{audioName}</h3>
               <label className='file-upload' value='Upload audio file'>
                 <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
                   onChange={() => this.loadAuio()} />
@@ -125,49 +131,53 @@ class AudioPlayer extends React.Component {
               </label>
             </div>
           </div>
-          <Waveform audioSource={audioSource} />
-          <div className='conten-center audio-block'>
+
+          <audio id={AUDIO_TAG + id} />
+
+          <div className='audio-block'>
+            <Waveform audioSource={audioSource} />
+          </div>
+
+          <div className='content-center audio-block'>
             <button id={PLAY_BUTTON_NAME + id}
               onClick={() => audioSource.getAudioTimeManger().play()}
-              className='margined'  disabled={isLoaded ? false : true}>Play</button>
+              className='left-radius-button control-button'
+              disabled={isLoaded ? false : true}>
+              Play
+            </button>
             <button id={STOP_BUTTON_NAME + id}
               onClick={() => audioSource.getAudioTimeManger().stop()}
-              className='margined'  disabled={isLoaded ? false : true}>Stop</button>
+              className='control-button'  disabled={isLoaded ? false : true}>
+              Stop
+            </button>
             <button id={PAUSE_BUTTON_NAME + id}
               onClick={() => audioSource.getAudioTimeManger().pause()}
-              className='margined'  disabled={isLoaded ? false : true}>Pause</button>
-            <div>
-              <div>
-                <audio id={AUDIO_TAG + id} />
-              </div>
-              <div>
-                <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
-                    value={speed} onInput={() => this.changeSpeed()}
-                    onDoubleClick={() => this.resetSpeed()}
-                    min='0.5' max='1.5' step='0.0125'/>
-                </div>
-                <div className='conten-center'>
-                  <label htmlFor={SPEED_SLIEDR_NAME + id}>Speed</label>
-                </div>
-              </div>
-              <div>
-                <button onClick={() => this.smoothResetSpeed()}>Reset speed</button>
-              </div>
-            </div>
-            <div className='conten-center'>
-              <h3>Looping</h3>
-              <input type='button' value='1/2'
-                onClick={event => this.setLoop(0.5)}/>
-              <input type='button' value='1'
-                onClick={event => this.setLoop(Number(event.target.value))}/>
-              <input type='button' value='2'
-                onClick={event => this.setLoop(Number(event.target.value))}/>
-              <input type='button' value='4'
-                onClick={event => this.setLoop(Number(event.target.value))}/>
-              <input type='button' value='8'
-                onClick={event => this.setLoop(Number(event.target.value))}/>
-            </div>
+              className='right-radius-button control-button'
+              disabled={isLoaded ? false : true}>
+              Pause
+            </button>
           </div>
+
+          <div className='audio-block'>
+              <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
+                  value={speed} onInput={() => this.changeSpeed()}
+                  onDoubleClick={() => this.resetSpeed()}
+                  min='0.5' max='1.5' step='0.0125'/> <br/>
+              <label htmlFor={SPEED_SLIEDR_NAME + id}>Speed</label> <br/>
+              <button onClick={() => this.smoothResetSpeed()}>Reset speed</button>
+          </div>
+
+          <div className='audio-block content-center'>
+            <h3 className=''>Looping</h3>
+            <button className='left-radius-button loop-button'>&lt;&lt;</button>
+            <button className='loop-button' onClick={event => this.setLoop(0.5)}>1/2</button>
+            <button className='loop-button' onClick={event => this.setLoop(1)}>1</button>
+            <button className='loop-button' onClick={event => this.setLoop(2)}>2</button>
+            <button className='loop-button' onClick={event => this.setLoop(4)}>4</button>
+            <button className='loop-button' onClick={event => this.setLoop(8)}>8</button>
+            <button className='right-radius-button'>&gt;&gt;</button>
+          </div>
+        </div>
       );
   }
 

@@ -1,8 +1,6 @@
 .slider {
-  margin-top: 15%;
-  margin-bottom: 15%;
   transform: rotate(270deg);
-  height: 100px;
+
 }
 
 .file-upload  {
@@ -22,7 +20,7 @@
 
 .audio-block {
   width: 100%;
-  margin: 1em 0em;
+  padding: 0.5rem 0rem;
 }
 
 input[type='file'] {
@@ -32,4 +30,40 @@ input[type='file'] {
 h3 {
   padding: 0px 1em;
   margin: 0px;
+  max-width: 190px;
+}
+
+.audio-sectiond {
+  max-width: 30%;
+}
+
+.audio-block > button {
+
+  height: 1.8rem;
+  margin:  1.5rem, 0rem;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  outline: none;
+}
+
+button:disabled {
+  border: none;
+}
+
+.left-radius-button {
+  border-radius: 3rem 0rem 0rem 3rem;
+  border-left: 1px solid black;
+}
+
+.right-radius-button {
+  border-radius: 0rem 3rem 3rem 0rem;
+  border-right: 1px solid black;
+}
+
+.control-button {
+  width: 6rem;
+}
+
+.loop-button {
+  width: 2rem;
 }
