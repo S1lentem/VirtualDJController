@@ -19,7 +19,7 @@ class Mixer extends React.Component {
      const crossfaderValue = Number(document.getElementById('crossfader').value);
      const leftPlayer = this.state.leftPlayer;
      const rightPlayer = this.state.rightPlayer;
-
+     console.log('change');
      if (crossfaderValue < 0){
        rightPlayer.setCrossfaderGain(1 + crossfaderValue);
      } else if (crossfaderValue > 0) {

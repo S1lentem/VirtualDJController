@@ -74,7 +74,7 @@ class AudioSource {
   }
 
   setCrossfaderGain(value){
-    if (!this.crossafaderGainNode){
+    if (this.crossafaderGainNode){
       this.crossafaderGainNode.gain.value = value;
     }
   }
