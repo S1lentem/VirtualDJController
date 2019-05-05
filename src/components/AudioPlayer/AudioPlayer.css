@@ -1,6 +1,6 @@
-.slider {
-  transform: rotate(270deg);
-
+.audio-block {
+  width: 100%;
+  padding: 0.5rem 0rem;
 }
 
 .file-upload  {
@@ -18,11 +18,6 @@
   background: #808080
 }
 
-.audio-block {
-  width: 100%;
-  padding: 0.5rem 0rem;
-}
-
 input[type='file'] {
   display: none;
 }
@@ -33,16 +28,9 @@ h3 {
   max-width: 190px;
 }
 
-.audio-sectiond {
-  max-width: 30%;
-}
-
 .audio-block > button {
-
-  height: 1.8rem;
-  margin:  1.5rem, 0rem;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
+  border-top: none;
+  /* border-bottom: none; */
   outline: none;
 }
 
@@ -52,18 +40,50 @@ button:disabled {
 
 .left-radius-button {
   border-radius: 3rem 0rem 0rem 3rem;
-  border-left: 1px solid black;
 }
 
 .right-radius-button {
   border-radius: 0rem 3rem 3rem 0rem;
-  border-right: 1px solid black;
 }
 
 .control-button {
   width: 6rem;
+  height: 1.5rem;
 }
 
 .loop-button {
   width: 2rem;
+}
+
+.speed-slider {
+  -webkit-appearance: slider-vertical;
+  height: 10rem;
+}
+
+.audiodisk {
+  width: 12rem;
+  height: 12rem;
+}
+
+.audiodisk-play {
+  animation: 5s ease-in 0s normal none infinite running rotation;
+  animation-timing-function: steps(128, end);
+}
+
+
+@@keyframes rotation {
+  from { transform: rotate(0deg);}
+  to { transform: rotate(360deg);}
+}
+@-webkit-keyframes rotation {
+   0% {
+     transform: rotate(0deg);
+   }
+   100% {
+     transform: rotate(360deg);
+   }
+}
+
+.vertical-split{
+  margin: 12rem 0rem;
 }

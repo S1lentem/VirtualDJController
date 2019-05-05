@@ -19,7 +19,6 @@ class Mixer extends React.Component {
      const crossfaderValue = Number(document.getElementById('crossfader').value);
      const leftPlayer = this.state.leftPlayer;
      const rightPlayer = this.state.rightPlayer;
-     console.log('change');
      if (crossfaderValue < 0){
        rightPlayer.setCrossfaderGain(1 + crossfaderValue);
      } else if (crossfaderValue > 0) {
@@ -43,14 +42,11 @@ class Mixer extends React.Component {
         <div className='flex-container'>
           {chanels}
         </div>
-        <div>
-          <div className='center'>
-            <label>Crossfader</label>
-          </div>
-          <div className='center'>
-            <input id='crossfader' type='range' min='-1' max='1' step='0.015625'
-              value={crossfaderValue} onChange={() => this.changeCrossfader()}/>
-          </div>
+        <div className='content-center'>
+          <label>Crossfader</label><br/>
+          <input id='crossfader' type='range' min='-1' max='1' step='0.015625'
+            value={crossfaderValue} onChange={() => this.changeCrossfader()}
+            className='crossfader-slider'/>
         </div>
       </div>
     );

@@ -52,16 +52,16 @@ class MixerChannel extends React.Component {
 
         <Frequencies source={this.state.source} />
 
-        <div className='center'>
+        <div className='content-center'>
           <label htmlFor={GAIN_SLIEDR_NAME + id}>Volume</label>
         </div>
         <div>
-          <input id={GAIN_SLIEDR_NAME + id} type='range' className='slider'
+          <input id={GAIN_SLIEDR_NAME + id} type='range' className='volume-slider'
             onInput={() => this.changeGain()}
             min='0' max='1.25' step='0.0125'/>
         </div>
         <div>
-          <div className='center'>
+          <div className='content-center'>
             <label htmlFor={PAN_SLIDER_NAME + id}>Balance</label>
           </div>
           <div>

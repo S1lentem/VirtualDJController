@@ -3,6 +3,8 @@ import WaveSurfer from 'wavesurfer.js'
 import { guess } from 'web-audio-beat-detector';
 
 import Waveform from'./Waveform/Waveform'
+import diskImg from './disk.png'
+
 
 import './AudioPlayer.css'
 
@@ -25,7 +27,8 @@ class AudioPlayer extends React.Component {
       id: props.id,
       isLoaded: false,
       speed: 1,
-      audioName: null
+      audioName: null,
+      playingState: 'stop'
     }
     this.state.audioSource.addUploadListener(audioSource =>{
       const speed = Number(document.getElementById(SPEED_SLIEDR_NAME +
@@ -108,6 +111,21 @@ class AudioPlayer extends React.Component {
     }
   }
 
+  playAudio(){
+    this.state.audioSource.getAudioTimeManger().play();
+    this.setState({playingState: 'played'});
+  }
+
+  stopAudio(){
+    this.state.audioSource.getAudioTimeManger().stop()
+    this.setState({playingState: 'stoped'});
+  }
+
+  pauseAudio(){
+    this.state.audioSource.getAudioTimeManger().pause();
+    this.setState({playingState: 'suspended'});
+  }
+
 
   render(){
     const audioSource = this.state.audioSource;
@@ -117,6 +135,8 @@ class AudioPlayer extends React.Component {
     const audioName = this.state.audioName !== null ? this.state.audioName:
       'Audio not load'
 
+    const diskCSSSelector = this.state.playingState === 'played' ?
+          'audiodisk audiodisk-play' : 'audiodisk'
 
     return (
         <div className=''>
@@ -140,31 +160,45 @@ class AudioPlayer extends React.Component {
 
           <div className='content-center audio-block'>
             <button id={PLAY_BUTTON_NAME + id}
-              onClick={() => audioSource.getAudioTimeManger().play()}
+              onClick={() => this.playAudio()}
               className='left-radius-button control-button'
               disabled={isLoaded ? false : true}>
               Play
             </button>
-            <button id={STOP_BUTTON_NAME + id}
-              onClick={() => audioSource.getAudioTimeManger().stop()}
-              className='control-button'  disabled={isLoaded ? false : true}>
-              Stop
-            </button>
             <button id={PAUSE_BUTTON_NAME + id}
-              onClick={() => audioSource.getAudioTimeManger().pause()}
-              className='right-radius-button control-button'
+              onClick={() => this.pauseAudio()}
+              className='control-button'
               disabled={isLoaded ? false : true}>
               Pause
             </button>
+            <button id={STOP_BUTTON_NAME + id}
+              onClick={() => this.stopAudio()}
+              className='control-button right-radius-button'
+              disabled={isLoaded ? false : true}>
+              Stop
+            </button>
           </div>
 
-          <div className='audio-block'>
-              <input id={SPEED_SLIEDR_NAME + id} type='range' className='slider'
-                  value={speed} onInput={() => this.changeSpeed()}
-                  onDoubleClick={() => this.resetSpeed()}
-                  min='0.5' max='1.5' step='0.0125'/> <br/>
-              <label htmlFor={SPEED_SLIEDR_NAME + id}>Speed</label> <br/>
-              <button onClick={() => this.smoothResetSpeed()}>Reset speed</button>
+
+          <div className='audio-block flex-container'>
+            <img src={diskImg} alt='disk' className={diskCSSSelector}/>
+            <div>
+              <input id={SPEED_SLIEDR_NAME + id} type='range'
+                    className='speed-slider'
+                    value={speed} onInput={() => this.changeSpeed()}
+                    onDoubleClick={() => this.resetSpeed()}
+                    min='0.5' max='1.5' step='0.0125'/>
+                <div className='content-center'>
+                <label htmlFor={SPEED_SLIEDR_NAME + id}
+                  className='content-center'>
+                  Speed
+                </label> <br className='vertical-split'/>
+                <button onClick={() => this.smoothResetSpeed()}
+                  className='control-button'>
+                  Reset speed
+                </button>
+              </div>
+            </div>
           </div>
 
           <div className='audio-block content-center'>

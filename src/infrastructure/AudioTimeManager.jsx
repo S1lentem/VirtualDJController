@@ -19,15 +19,18 @@ class AudioTimeManager {
 
   play(){
     this.media.play();
+    this.status = AudioTrackStatus.played;
   }
 
   pause(){
     this.media.pause();
+    this.status = AudioTrackStatus.suspended;
   }
 
   stop() {
     this.pause();
     this.media.currentTime = 0;
+    this.status = AudioTrackStatus.stoped;
   }
 
   setLoop(value){
@@ -65,6 +68,10 @@ class AudioTimeManager {
 
   getCurrentTime(){
     return this.media.currentTime;
+  }
+
+  getStatus() {
+    return this.status;
   }
 }
 

@@ -1,5 +1,14 @@
 .header {
+  margin: 0px;
   width: 100%;
   height: 5rem;
   background-color: #A0A0A0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.header > div{
+  padding-top: 12px;
+  width: 100%;
+  height: 30px;
 }
