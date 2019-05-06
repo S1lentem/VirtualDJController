@@ -8,6 +8,8 @@
     "react-dom": "^16.8.4",
     "react-native-circular-slider": "^1.0.1",
     "react-native-svg": "^9.3.7",
+    "react-rotary-knob": "^1.1.5",
+    "react-rotary-knob-skin-pack": "^1.0.2",
     "react-scripts": "2.1.8",
     "react-wavesurfer": "^0.8.6",
     "waveform-data": "^2.1.2",

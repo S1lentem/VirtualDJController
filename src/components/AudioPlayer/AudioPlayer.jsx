@@ -202,14 +202,28 @@ class AudioPlayer extends React.Component {
           </div>
 
           <div className='audio-block content-center'>
-            <h3 className=''>Looping</h3>
-            <button className='left-radius-button loop-button'>&lt;&lt;</button>
-            <button className='loop-button' onClick={event => this.setLoop(0.5)}>1/2</button>
-            <button className='loop-button' onClick={event => this.setLoop(1)}>1</button>
-            <button className='loop-button' onClick={event => this.setLoop(2)}>2</button>
-            <button className='loop-button' onClick={event => this.setLoop(4)}>4</button>
-            <button className='loop-button' onClick={event => this.setLoop(8)}>8</button>
-            <button className='right-radius-button'>&gt;&gt;</button>
+            <label className=''>Looping</label><br />
+            <button className='left-radius-button loop-button'>
+              <strong>&lt;&lt;</strong>
+            </button>
+            <button className='loop-button' onClick={event => this.setLoop(0.5)}>
+              <strong>1/2</strong>
+            </button>
+            <button className='loop-button' onClick={event => this.setLoop(1)}>
+              <strong>1</strong>
+            </button>
+            <button className='loop-button' onClick={event => this.setLoop(2)}>
+              <strong>2</strong>
+            </button>
+            <button className='loop-button' onClick={event => this.setLoop(4)}>
+              <strong>4</strong>
+            </button>
+            <button className='loop-button' onClick={event => this.setLoop(8)}>
+              <strong>8</strong>
+            </button>
+            <button className='right-radius-button loop-button'>
+              <strong>&gt;&gt;</strong>
+            </button>
           </div>
         </div>
       );

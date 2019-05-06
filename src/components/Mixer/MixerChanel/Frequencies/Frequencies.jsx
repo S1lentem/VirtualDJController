@@ -2,6 +2,10 @@ import React from 'react'
 import { CircleSlider } from "react-circle-slider";
 
 
+// import * as skins from 'react-rotary-knob-skins-pack';
+
+import FixedKnob from '../../FixedKnob/FixedKnob'
+
 const HI_FREQUENCY_NAME = 'hi';
 const MID_FREQUENCY_NAME = 'mid';
 const LOW_FREQUENCY_NAME = 'low';
@@ -48,12 +52,11 @@ class Frequencies extends React.Component {
     const low = this.state.low;
     const mid = this.state.mid;
     const hi = this.state.hi;
-
+    //s5
     return (
       <div>
 
-        <CircleSlider size={60} knobRadius={10} progressWidth={5} value={50}
-          progressColor={null}/>
+        <FixedKnob min={-10} max={10} step={0.01}/>
 
         <div>
           <div className='content-center'>
