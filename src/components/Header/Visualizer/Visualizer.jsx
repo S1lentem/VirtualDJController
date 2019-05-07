@@ -14,6 +14,8 @@ export default class Visualizer extends React.Component {
   componentDidUpdate(prevProps, prevState){
     const analyser = this.props.analyzer;
     if (analyser){
+      alert('create');
+
       const canvas = document.getElementById('visual');
       const ctx = canvas.getContext('2d');
 

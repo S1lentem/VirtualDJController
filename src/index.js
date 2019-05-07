@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 
 import Controller from './components/Controller/Controller.jsx'
 import Header from './components/Header/Header.jsx'
+import Footer from './components/Footer/Footer.jsx'
 
 import './index.css'
 
@@ -24,6 +25,7 @@ class Main extends React.Component {
       <div>
         <Header analyzer={this.state.analyzer}/>
         <Controller updateAnalyzer={this.updateAnalyzer}/>
+        <Footer analyzer={this.state.analyzer} />
       </div>
       );
   }

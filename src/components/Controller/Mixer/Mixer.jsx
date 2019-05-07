@@ -38,7 +38,7 @@ class Mixer extends React.Component {
     const crossfaderValue = this.state.crossfaderValue;
 
     return (
-      <div>
+      <div className='mixer'>
         <div className='flex-container'>
           {chanels}
         </div>
