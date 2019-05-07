@@ -7,11 +7,23 @@ import Header from './components/Header/Header.jsx'
 import './index.css'
 
 class Main extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state ={
+      analyzer: null
+    }
+
+    this.updateAnalyzer = analyzer => {
+      this.setState({analyzer: analyzer});
+    }
+  }
+
   render(){
     return (
       <div>
-        <Header />
-        <Controller />
+        <Header analyzer={this.state.analyzer}/>
+        <Controller updateAnalyzer={this.updateAnalyzer}/>
       </div>
       );
   }

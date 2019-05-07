@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {AudioPlayer, AUDIO_TAG} from '../AudioPlayer/AudioPlayer'
-import Mixer from '../Mixer/Mixer'
+import {AudioPlayer, AUDIO_TAG} from './AudioPlayer/AudioPlayer'
+import Mixer from './Mixer/Mixer'
 import AudioSource from '../../infrastructure/AudioSource'
 
 // import '../../styles/index.css'
@@ -34,12 +34,13 @@ class Controller extends React.Component {
       leftAudioPlayers,
       rightAudioPlayers,
       analyzer
-    }
+    };
+    props.updateAnalyzer(analyzer);
   }
 
   render(){
     return (
-      <div className='flex-container flex-container-center-content'>
+      <div className='flex-container flex-container-center-content controller'>
         {this.state.leftAudioPlayers}
         <Mixer audioSources={this.state.audioSources} />
         {this.state.rightAudioPlayers}
