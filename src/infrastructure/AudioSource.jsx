@@ -6,8 +6,8 @@ const defaultGain = 1;
 
 class AudioSource {
 
-  constructor(id, media){
-    this.context = new window.AudioContext();
+  constructor(id, context){
+    this.context = context;
     this.id = id;
     this.uploadedListeners = [];
 
@@ -25,7 +25,7 @@ class AudioSource {
 
 
   linkToMediaElement(media){
-    this.audioTimeManager = new AudioTimeManager(this.context, this.id, media);
+    this.audioTimeManager = new AudioTimeManager(media);
     this.source = this.context.createMediaElementSource(media);
     this.media = media;
 

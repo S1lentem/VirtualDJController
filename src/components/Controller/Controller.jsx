@@ -15,10 +15,11 @@ const COUNT_AUDIO_PLAYER = 2;
 class Controller extends React.Component {
   constructor(props){
     super(props);
+    const audioContext = new window.AudioContext();
     const leftAudioPlayers = [], rightAudioPlayers = [];
     const audioSources = [];
     for (var i = 0; i < COUNT_AUDIO_PLAYER; i++){
-      let audioSource = new AudioSource(i);
+      let audioSource = new AudioSource(i, audioContext);
       if (i % 2 === 0){
         leftAudioPlayers.push(<AudioPlayer id={i} source={audioSource}/>);
       } else {
@@ -30,7 +31,8 @@ class Controller extends React.Component {
     this.state = {
       audioSources: audioSources,
       leftAudioPlayers: leftAudioPlayers,
-      rightAudioPlayers: rightAudioPlayers
+      rightAudioPlayers: rightAudioPlayers,
+      audioContext: audioContext
     }
   }
 

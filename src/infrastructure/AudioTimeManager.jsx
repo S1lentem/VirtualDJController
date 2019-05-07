@@ -1,7 +1,5 @@
 class AudioTimeManager {
-  constructor(audioContext, id, media){
-    this.audioContext = audioContext;
-    this.id = id;
+  constructor(media){
     this.status = AudioTrackStatus.stoped;
 
     this.isLoop = false;
