@@ -1,6 +1,6 @@
 import React from 'react'
 import Frequencies from './Frequencies/Frequencies'
-
+import FixedKnob from '../FixedKnob/FixedKnob'
 
 import './MixerChanel.css'
 
@@ -14,15 +14,16 @@ class MixerChannel extends React.Component {
       source: props.source,
       pan: 0
     }
-    this.state.source.addUploadListener(source => {
-      const currentGain = Number(document
-        .getElementById(GAIN_SLIEDR_NAME + source.getId()).value);
-      const currentPan = Number(document
-        .getElementById(PAN_SLIDER_NAME + source.getId()).value);
-
-      source.setGain(currentGain);
-      source.setPanned(currentPan);
-    });
+    // this.state.source.addUploadListener(source => {
+    //   ToDo fix this!
+    //   const currentGain = Number(document
+    //     .getElementById(GAIN_SLIEDR_NAME + source.getId()).value);
+    //   const currentPan = Number(document
+    //     .getElementById(PAN_SLIDER_NAME + source.getId()).value);
+    //
+    //   source.setGain(currentGain);
+    //   source.setPanned(currentPan);
+    // });
   }
 
   changeGain(){
@@ -33,12 +34,9 @@ class MixerChannel extends React.Component {
     }
   }
 
-  changePan(){
-    const audioSource = this.state.source;
-    const currentPan = Number(document
-      .getElementById(PAN_SLIDER_NAME + audioSource.getId()).value);
-    audioSource.setPanned(currentPan);
-    this.setState({pan: currentPan});
+  changePan(value){
+    this.state.source.setPanned(value/100);
+    this.setState({pan: value/100});
   }
 
 
@@ -49,9 +47,9 @@ class MixerChannel extends React.Component {
 
     return (
       <div>
-
-        <Frequencies source={this.state.source} />
-
+        <div className='content-center'>
+          <Frequencies source={this.state.source} />
+        </div>
         <div className='content-center'>
           <label htmlFor={GAIN_SLIEDR_NAME + id}>Volume</label>
         </div>
@@ -60,14 +58,10 @@ class MixerChannel extends React.Component {
             onInput={() => this.changeGain()}
             min='0' max='1.25' step='0.0125'/>
         </div>
-        <div>
-          <div className='content-center'>
-            <label htmlFor={PAN_SLIDER_NAME + id}>Balance</label>
-          </div>
-          <div>
-            <input id={PAN_SLIDER_NAME + id} onInput={() => this.changePan()}
-              type='range' min='-1' max='1' step='0.0078125' value={panValue}/>
-          </div>
+        <div className='content-center'>
+          <label>Balance</label>
+            <FixedKnob min={-100} max={100} colorId={1}
+              onChange={value => this.changePan(value)} />
         </div>
       </div>
     );

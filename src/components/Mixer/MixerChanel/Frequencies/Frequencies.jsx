@@ -23,70 +23,38 @@ class Frequencies extends React.Component {
     }
   }
 
-  changeLowFrequency(){
-    const id = this.state.id;
-    const currentLowFrequency = Number(
-      document.getElementById(LOW_FREQUENCY_NAME + id).value);
-    this.state.source.getFrequencyManager().setLowFrequency(currentLowFrequency);
-    this.setState({low: currentLowFrequency});
+  changeLowFrequency(value){
+    this.state.source.getFrequencyManager().setLowFrequency(value);
+    this.setState({low: value});
   }
 
-  changeMidFrequency(){
-    const id = this.state.id;
-    const currentMidFrequency = Number(
-      document.getElementById(MID_FREQUENCY_NAME + id).value);
-    this.state.source.getFrequencyManager().setMidFrequency(currentMidFrequency);
-    this.setState({mid: currentMidFrequency});
+  changeMidFrequency(value){
+    this.state.source.getFrequencyManager().setMidFrequency(value);
+    this.setState({mid: value});
   }
 
-  changeHiFrequency(){
-    const id = this.state.id;
-    const currentHiFrequency = Number(
-      document.getElementById(HI_FREQUENCY_NAME + id).value);
-    this.state.source.getFrequencyManager().setHiFrequency(currentHiFrequency);
-    this.setState({hi: currentHiFrequency});
+  changeHiFrequency(value){
+    this.state.source.getFrequencyManager().setHiFrequency(value);
+    this.setState({hi: value});
   }
 
   render(){
-    const id = this.state.id;
-    const low = this.state.low;
-    const mid = this.state.mid;
-    const hi = this.state.hi;
-    //s5
     return (
       <div>
-
-        <FixedKnob min={-10} max={10} step={0.01}/>
-
         <div>
-          <div className='content-center'>
-            <label htmlFor={HI_FREQUENCY_NAME + id}>HI</label>
-          </div>
-          <div>
-            <input id={HI_FREQUENCY_NAME + id} onInput={() => this.changeHiFrequency()}
-              type='range' min='-10' max='10' step='0.0078125'
-              value={this.state.hi}/>
-          </div>
+          <label>HI</label>
+          <FixedKnob min={-10} max={10} colorId={3}
+            onChange={value => this.changeHiFrequency(value)} />
         </div>
         <div>
-          <div className='content-center'>
-            <label htmlFor={MID_FREQUENCY_NAME + id}>MID</label>
-          </div>
-          <div>
-            <input id={MID_FREQUENCY_NAME + id} onInput={() => this.changeMidFrequency()}
-              type='range' min='-10' max='10' step='0.0078125'
-              value={this.state.mid}/>
-          </div>
+          <label>MID</label>
+          <FixedKnob min={-10} max={10} colorId={2}
+            onChange={value => this.changeMidFrequency(value)} />
         </div>
         <div>
-          <div className='content-center'>
-            <label htmlFor={LOW_FREQUENCY_NAME + id}>LOW</label>
-          </div>
-          <div>
-            <input id={LOW_FREQUENCY_NAME + id} onInput={() => this.changeLowFrequency()}
-              type='range' min='-10' max='10' step='0.0078125'
-              value={this.state.low}/>
-          </div>
+          <label>LOW</label>
+          <FixedKnob min={-10} max={10} colorId={1}
+            onChange={value => this.changeLowFrequency(value)} />
         </div>
       </div>
     )
