@@ -20,7 +20,6 @@ class AudioSource {
 
     this.FrequenciesManager = new FrequenciesManager(this.context);
     this.panNode.connect(this.FrequenciesManager.getFirstNode());
-    this.FrequenciesManager.getLastNode().connect(this.context.destination);
   }
 
 
@@ -93,6 +92,10 @@ class AudioSource {
 
   getMedia(){
     return this.media;
+  }
+
+  getLastNode(){
+    return this.FrequenciesManager.getLastNode();
   }
 }
 
