@@ -9,7 +9,7 @@ class Header extends React.Component {
     return (
       <div className='header'>
         <label className='header-text'>By S1lentem</label>
-        <Visualizer analyzer={this.props.analyzer}/>
+        <Visualizer analyser={this.props.analyser}/>
       </div>
     );
   }

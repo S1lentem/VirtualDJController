@@ -1,6 +1,7 @@
 .audio-block {
   width: 100%;
   padding: 0.5rem 0rem;
+  position: relative;
 }
 
 .file-upload  {
@@ -91,6 +92,18 @@ button:disabled {
    }
 }
 
-.vertical-split{
-  margin: 12rem 0rem;
+.title {
+  height: 4rem;
+}
+
+.title-text {
+  padding-bottom: 1rem;
+  position: absolute;
+  width: 100%;
+  align: center;
+}
+
+.audio-player {
+  padding: 0 2rem;
+  /* wid */
 }

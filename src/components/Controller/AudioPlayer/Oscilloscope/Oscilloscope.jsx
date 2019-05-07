@@ -5,18 +5,17 @@ import './Oscilloscope.css'
 export default class Oscilloscope extends React.Component {
 
   render(){
-
+    console.log(this.props.id);
     return (
-      <canvas id='osc'></canvas>
+      <canvas id={'osc' + this.props.id} className='osc'></canvas>
     );
   }
 
   componentDidUpdate(prevProps, prevState){
-    const analyser = this.props.analyzer;
+    const analyser = this.props.analyser;
 
     if (analyser){
-      alert('create');
-      const canvas = document.getElementById('osc');
+      const canvas = document.getElementById('osc' + this.props.id);
       const ctx = canvas.getContext('2d');
 
       analyser.fftSize = 2048;
@@ -29,11 +28,11 @@ export default class Oscilloscope extends React.Component {
       const renderFrame = () => {
         requestAnimationFrame(renderFrame);
         analyser.getByteTimeDomainData(dataArray);
-        ctx.fillStyle = "#696969";
+        ctx.fillStyle = "#C0C0C0";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "rgb(0, 0, 0)";
+        ctx.strokeStyle = this.props.color ? this.props.color : 'black';
 
         ctx.beginPath();
 

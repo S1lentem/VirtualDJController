@@ -12,20 +12,20 @@ class Main extends React.Component {
     super(props);
 
     this.state ={
-      analyzer: null
+      analyser: null
     }
 
-    this.updateAnalyzer = analyzer => {
-      this.setState({analyzer: analyzer});
+    this.updateanalyser = analyser => {
+      this.setState({analyser: analyser});
     }
   }
 
   render(){
     return (
       <div>
-        <Header analyzer={this.state.analyzer}/>
-        <Controller updateAnalyzer={this.updateAnalyzer}/>
-        <Footer analyzer={this.state.analyzer} />
+        <Header analyser={this.state.analyser}/>
+        <Controller updateanalyser={this.updateanalyser}/>
+        <Footer analyser={this.state.analyser} />
       </div>
       );
   }

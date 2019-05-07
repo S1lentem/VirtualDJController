@@ -3,6 +3,7 @@ import WaveSurfer from 'wavesurfer.js'
 import { guess } from 'web-audio-beat-detector';
 
 import Waveform from'./Waveform/Waveform'
+import Oscilloscope from './Oscilloscope/Oscilloscope';
 import diskImg from './disk.png'
 
 
@@ -138,10 +139,18 @@ class AudioPlayer extends React.Component {
     const diskCSSSelector = this.state.playingState === 'played' ?
           'audiodisk audiodisk-play' : 'audiodisk'
 
+    console.log('id', id);
     return (
-        <div className=''>
+        <div className='audio-player'>
+          <div className='audio-block title'>
+            <h1 className='content-center title-text'>Audio Player {id + 1}</h1>
+            <Oscilloscope
+              id = {id}
+              analyser={audioSource.getAnalyser()}
+              color={id % 2 === 0 ? 'red' : 'blue'}
+            />
+          </div>
           <div className='audio-block'>
-            <h1 className='content-center'>Audio Player {id + 1}</h1>
             <div className='flex-container'>
               <h3 id={STATUS_TEXT_NAME + id}>{audioName}</h3>
               <label className='file-upload' value='Upload audio file'>

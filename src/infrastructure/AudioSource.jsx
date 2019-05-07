@@ -14,12 +14,14 @@ class AudioSource {
     this.gainNode = this.context.createGain();
     this.crossafaderGainNode = this.context.createGain();
     this.panNode = this.context.createStereoPanner();
+    this.analyser = this.context.createAnalyser();
 
     this.gainNode.connect(this.crossafaderGainNode);
     this.crossafaderGainNode.connect(this.panNode);
 
     this.FrequenciesManager = new FrequenciesManager(this.context);
     this.panNode.connect(this.FrequenciesManager.getFirstNode());
+    this.FrequenciesManager.getLastNode().connect(this.analyser);
   }
 
 
@@ -94,8 +96,12 @@ class AudioSource {
     return this.media;
   }
 
+  getAnalyser(){
+    return this.analyser;
+  }
+
   getLastNode(){
-    return this.FrequenciesManager.getLastNode();
+    return this.analyser;
   }
 }
 

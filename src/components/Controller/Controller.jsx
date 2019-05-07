@@ -27,15 +27,15 @@ class Controller extends React.Component {
       }
       audioSources.push(audioSource);
     }
-    const analyzer = audioContext.createAnalyser();
-    analyzer.connect(audioContext.destination);
+    const analyser = audioContext.createAnalyser();
+    analyser.connect(audioContext.destination);
     this.state = {
       audioSources,
       leftAudioPlayers,
       rightAudioPlayers,
-      analyzer
+      analyser
     };
-    props.updateAnalyzer(analyzer);
+    props.updateanalyser(analyser);
   }
 
   render(){
@@ -53,7 +53,7 @@ class Controller extends React.Component {
     for (let i = 0; i < audioSources.length; i++){
       const media = document.getElementById(AUDIO_TAG + audioSources[i].getId());
       audioSources[i].linkToMediaElement(media);
-      audioSources[i].getLastNode().connect(this.state.analyzer);
+      audioSources[i].getLastNode().connect(this.state.analyser);
     }
   }
 }
