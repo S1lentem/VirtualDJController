@@ -7,9 +7,6 @@ import AudioSource from '../../infrastructure/AudioSource'
 // import '../../styles/index.css'
 import './Controller.css'
 
-const audio1Path = 'tst.mp3'
-const audio2Path = 'tst2.mp3'
-
 const COUNT_AUDIO_PLAYER = 2;
 
 class Controller extends React.Component {

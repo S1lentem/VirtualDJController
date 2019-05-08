@@ -1,15 +1,6 @@
 import React from 'react'
-import { CircleSlider } from "react-circle-slider";
-
-
-// import * as skins from 'react-rotary-knob-skins-pack';
 
 import FixedKnob from '../../FixedKnob/FixedKnob'
-
-const HI_FREQUENCY_NAME = 'hi';
-const MID_FREQUENCY_NAME = 'mid';
-const LOW_FREQUENCY_NAME = 'low';
-
 
 class Frequencies extends React.Component {
   constructor(props){

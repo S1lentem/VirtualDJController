@@ -5,7 +5,6 @@ import FixedKnob from '../FixedKnob/FixedKnob'
 import './MixerChanel.css'
 
 const GAIN_SLIEDR_NAME = 'gain';
-const PAN_SLIDER_NAME = 'pan';
 
 class MixerChannel extends React.Component {
   constructor(props){
@@ -43,7 +42,6 @@ class MixerChannel extends React.Component {
 
   render(){
     const id = this.state.source.getId();
-    const panValue = this.state.pan;
 
     return (
       <div>

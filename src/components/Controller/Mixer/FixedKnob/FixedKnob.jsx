@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Knob } from 'react-rotary-knob';
 import * as skins from 'react-rotary-knob-skin-pack';
 

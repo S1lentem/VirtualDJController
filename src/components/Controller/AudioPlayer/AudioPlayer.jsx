@@ -1,5 +1,4 @@
 import React from 'react'
-import WaveSurfer from 'wavesurfer.js'
 import { guess } from 'web-audio-beat-detector';
 
 import Waveform from'./Waveform/Waveform'
@@ -11,7 +10,6 @@ import './AudioPlayer.css'
 
 
 const SPEED_SLIEDR_NAME = 'speed';
-const GAIN_SLIEDR_NAME = 'gain';
 const STATUS_TEXT_NAME = 'status';
 const PLAY_BUTTON_NAME = 'play';
 const STOP_BUTTON_NAME = 'stop';
@@ -49,7 +47,6 @@ class AudioPlayer extends React.Component {
   }
 
   resetSpeed(){
-    let audioSource = this.state.audioSource;
     this.setState({speed: 1});
     this.state.audioSource.setSpeed(1);
   }
@@ -83,7 +80,6 @@ class AudioPlayer extends React.Component {
     const reader = new FileReader();
     const arrayBufferReader = new FileReader();
     const files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
-    const mediaElement = document.getElementById(AUDIO_TAG + this.state.id);
 
     reader.onload = ev => {
       this.state.audioSource.load(ev.target.result);
@@ -106,7 +102,7 @@ class AudioPlayer extends React.Component {
   }
 
   setLoop(value){
-    if (this.state.audioSource.getAudioTimeManger().getLoopTime() != value){
+    if (this.state.audioSource.getAudioTimeManger().getLoopTime() !== value){
       this.state.audioSource.getAudioTimeManger().setLoop(value);
     } else {
       this.state.audioSource.getAudioTimeManger().resetLoop();

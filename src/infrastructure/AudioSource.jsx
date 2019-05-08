@@ -1,9 +1,6 @@
 import AudioTimeManager from './AudioTimeManager'
 import FrequenciesManager from './FrequenciesManager'
 
-const defaultSpeed = 1;
-const defaultGain = 1;
-
 class AudioSource {
 
   constructor(id, context){
@@ -104,12 +101,6 @@ class AudioSource {
     return this.analyser;
   }
 }
-
-var AudioTrackStatus = Object.freeze({
-  'stoped': 0,
-  'suspended': 1,
-  'played': 2
-});
 
 
 export default AudioSource;

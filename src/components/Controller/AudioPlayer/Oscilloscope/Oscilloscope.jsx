@@ -23,8 +23,6 @@ export default class Oscilloscope extends React.Component {
       const dataArray = new Uint8Array(bufferLength);
       analyser.getByteFrequencyData(dataArray);
 
-      const barWidth = (canvas.width / bufferLength) * 1.5;
-
       const renderFrame = () => {
         requestAnimationFrame(renderFrame);
         analyser.getByteTimeDomainData(dataArray);

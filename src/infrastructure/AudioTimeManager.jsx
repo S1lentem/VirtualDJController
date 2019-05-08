@@ -1,7 +1,5 @@
 class AudioTimeManager {
   constructor(media){
-    this.status = AudioTrackStatus.stoped;
-
     this.isLoop = false;
     this.startLoopTime = null;
     this.endLoopTime = null;
@@ -17,18 +15,15 @@ class AudioTimeManager {
 
   play(){
     this.media.play();
-    this.status = AudioTrackStatus.played;
   }
 
   pause(){
     this.media.pause();
-    this.status = AudioTrackStatus.suspended;
   }
 
   stop() {
     this.pause();
     this.media.currentTime = 0;
-    this.status = AudioTrackStatus.stoped;
   }
 
   setLoop(value){
@@ -67,18 +62,7 @@ class AudioTimeManager {
   getCurrentTime(){
     return this.media.currentTime;
   }
-
-  getStatus() {
-    return this.status;
-  }
 }
-
-
-var AudioTrackStatus = Object.freeze({
-  'stoped': 0,
-  'suspended': 1,
-  'played': 2
-});
 
 
 export default AudioTimeManager;
