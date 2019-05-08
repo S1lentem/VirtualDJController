@@ -1,0 +1,21 @@
+.audiodisk {
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  animation: rotation 5s linear infinite;
+  animation-play-state: paused;
+}
+
+.audiodisk-red {
+  border: 0.25rem solid #B22222;
+}
+
+.audiodisk-blue {
+  border: 0.25rem solid #0000FF;
+}
+
+
+@-webkit-keyframes rotation {
+   from {transform: rotate(360deg);}
+   to {transform: rotate(720deg);}
+}

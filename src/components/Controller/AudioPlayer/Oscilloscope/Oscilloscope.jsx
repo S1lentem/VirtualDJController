@@ -5,7 +5,6 @@ import './Oscilloscope.css'
 export default class Oscilloscope extends React.Component {
 
   render(){
-    console.log(this.props.id);
     return (
       <canvas id={'osc' + this.props.id} className='osc'></canvas>
     );

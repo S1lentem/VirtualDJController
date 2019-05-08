@@ -58,18 +58,17 @@ button:disabled {
   height: 2rem;
 }
 
-.loop-button > span {
-   font: bold 1rem Arial, sans-serif;
+.red {
+  background: #B22222;
+}
+
+.blue {
+  background: #00008B;
 }
 
 .speed-slider {
   -webkit-appearance: slider-vertical;
   height: 10rem;
-}
-
-.audiodisk {
-  width: 12rem;
-  height: 12rem;
 }
 
 .red-border-audiodisk{
@@ -80,21 +79,6 @@ button:disabled {
 .blue-border-audiodisk {
   border-radius: 50%;
   border: 5px solid blue;
-}
-
-.audiodisk-play {
-  animation: rotation 5s linear infinite normal;
-}
-
-
-@-webkit-keyframes rotation {
-
-   from {
-     transform: rotate(360deg);
-   }
-   to {
-     transform: rotate(720deg);
-   }
 }
 
 .title {
@@ -112,6 +96,8 @@ button:disabled {
   padding: 0 2rem;
   width: 22rem;
 }
+
+
 
 .waveform-status{
   position: absolute;
