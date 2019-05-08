@@ -3,7 +3,7 @@ import { guess } from 'web-audio-beat-detector';
 
 import Waveform from'./Waveform/Waveform'
 import Oscilloscope from './Oscilloscope/Oscilloscope';
-import diskImg from './disk.png'
+import diskImg from './disk.jpg'
 import styled, {css, keyframes} from "styled-components"
 
 import './AudioPlayer.css'
@@ -24,7 +24,6 @@ class AudioPlayer extends React.Component {
     this.state = {
       audioSource: props.source,
       waveform: null,
-      id: props.id,
       isLoaded: false,
       speed: 1,
       audioName: null,
@@ -32,7 +31,7 @@ class AudioPlayer extends React.Component {
     }
     this.state.audioSource.addUploadListener(audioSource =>{
       const speed = Number(document.getElementById(SPEED_SLIEDR_NAME +
-                                                   this.state.id).value);
+                                                   this.props.id).value);
       audioSource.setSpeed(speed);
     });
   }
@@ -41,7 +40,7 @@ class AudioPlayer extends React.Component {
     if (this.state.speedTimerId){
       clearInterval(this.state.speedTimerId);
     }
-    let currentSpeed = Number(document.getElementById(SPEED_SLIEDR_NAME + this.state.id).value);
+    let currentSpeed = Number(document.getElementById(SPEED_SLIEDR_NAME + this.props.id).value);
     this.state.audioSource.setSpeed(currentSpeed);
     this.setState({speed: currentSpeed});
   }
@@ -56,7 +55,7 @@ class AudioPlayer extends React.Component {
     if (audioSource.getSpeed() === undefined){
       return;
     }
-    let slider = document.getElementById(SPEED_SLIEDR_NAME + this.state.id);
+    let slider = document.getElementById(SPEED_SLIEDR_NAME + this.props.id);
     let turnDown = audioSource.getSpeed() > 1 ? true : false;
     let value = turnDown ? -0.00625 : 0.00625;
 
@@ -79,7 +78,7 @@ class AudioPlayer extends React.Component {
   loadAuio(){
     const reader = new FileReader();
     const arrayBufferReader = new FileReader();
-    const files = document.getElementById(LOAD_AUDIO_BUTTON + this.state.id).files;
+    const files = document.getElementById(LOAD_AUDIO_BUTTON + this.props.id).files;
 
     reader.onload = ev => {
       this.state.audioSource.load(ev.target.result);
@@ -126,18 +125,19 @@ class AudioPlayer extends React.Component {
   }
 
   getAngleDiskComponent(){
-    const image = document.getElementById(DISK_NAME + this.state.id);
+    const image = document.getElementById(DISK_NAME + this.props.id);
     if (!image){
       return 0;
     }
+
     const valueRotate = window.getComputedStyle(image, null)
         .getPropertyValue('transform');
 
     if (valueRotate == 'none'){
       return 0;
     }
-    const values = valueRotate.split('(')[1].split(')')[0].split(',');
 
+    const values = valueRotate.split('(')[1].split(')')[0].split(',');
     let degree = Math.round(Math.asin(values[1]) * (180/Math.PI));
     if (values[0] < 0){
       degree = 180 - degree;
@@ -150,6 +150,7 @@ class AudioPlayer extends React.Component {
 
   getStyleForDisk(state){
     let angle = this.getAngleDiskComponent() % 360;
+    const color = this.props.id % 2 === 0 ? '#B22222' : '#00008B';
     if (state === 'played'){
       const spin = keyframes`
         from {transform: rotate(${angle}deg);}
@@ -161,7 +162,7 @@ class AudioPlayer extends React.Component {
         width: 12rem;
         height: 12rem;
         border-radius: 50%;
-        border: 5px solid;
+        border: 0.25rem solid ${color};
         animation: ${animation};
       `
     } else {
@@ -170,7 +171,7 @@ class AudioPlayer extends React.Component {
         width: 12rem;
         height: 12rem;
         border-radius: 50%;
-        border: 5px solid;
+        border: 0.25rem solid ${color};
         transform: rotate(${angle}deg);
       `
     }
@@ -180,10 +181,8 @@ class AudioPlayer extends React.Component {
   render(){
     const audioSource = this.state.audioSource;
     const isLoaded = this.state.isLoaded;
-    const id = this.state.id;
+    const id = this.props.id;
     const speed = this.state.speed;
-    const audioName = this.state.audioName !== null ? this.state.audioName:
-      'Audio not load'
 
     const DISK = this.getStyleForDisk(this.state.playingState);
 
@@ -199,7 +198,9 @@ class AudioPlayer extends React.Component {
             />
           </div>
           <div className='audio-block'>
-            <h4 id={STATUS_TEXT_NAME + id}>{audioName}</h4>
+            <h4 id={STATUS_TEXT_NAME + id}>
+              {this.state.audioName}
+            </h4>
             <label className='file-upload' value='Upload audio file'>
               <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
                 onChange={() => this.loadAuio()} />
@@ -210,6 +211,9 @@ class AudioPlayer extends React.Component {
           <audio id={AUDIO_TAG + id} />
 
           <div className='audio-block'>
+            <label className='waveform-status'>
+              {this.state.audioName === null ? 'Audio not load' : null}
+            </label>
             <Waveform audioSource={audioSource} />
           </div>
 

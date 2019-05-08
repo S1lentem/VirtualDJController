@@ -25,13 +25,14 @@ input[type='file'] {
 
 h4 {
   width: 100%;
+  height: 3rem;
+  max-height: 3rem;
   text-align: center;
   word-wrap: break-word;
 }
 
 .audio-block > button {
   border-top: none;
-  /* border-bottom: none; */
   outline: none;
 }
 
@@ -69,12 +70,20 @@ button:disabled {
 .audiodisk {
   width: 12rem;
   height: 12rem;
+}
+
+.red-border-audiodisk{
   border-radius: 50%;
-  border: 5px solid ;
+  border: 5px solid red;
+}
+
+.blue-border-audiodisk {
+  border-radius: 50%;
+  border: 5px solid blue;
 }
 
 .audiodisk-play {
-  animation: rotation 5s linear infinite normal;  
+  animation: rotation 5s linear infinite normal;
 }
 
 
@@ -102,4 +111,15 @@ button:disabled {
 .audio-player {
   padding: 0 2rem;
   width: 22rem;
+}
+
+.waveform-status{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 25%;
+  bottom: 25%;
+  font-size: 2rem;
+  font-weight: bold;
 }
