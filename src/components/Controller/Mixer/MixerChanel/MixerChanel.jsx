@@ -11,18 +11,7 @@ class MixerChannel extends React.Component {
     super(props);
     this.state  = {
       source: props.source,
-      pan: 0
     }
-    // this.state.source.addUploadListener(source => {
-    //   ToDo fix this!
-    //   const currentGain = Number(document
-    //     .getElementById(GAIN_SLIEDR_NAME + source.getId()).value);
-    //   const currentPan = Number(document
-    //     .getElementById(PAN_SLIDER_NAME + source.getId()).value);
-    //
-    //   source.setGain(currentGain);
-    //   source.setPanned(currentPan);
-    // });
   }
 
   changeGain(){
@@ -32,13 +21,6 @@ class MixerChannel extends React.Component {
       audioSource.setGain(currentGain);
     }
   }
-
-  changePan(value){
-    this.state.source.setPanned(value/100);
-    this.setState({pan: value/100});
-  }
-
-
 
   render(){
     const id = this.state.source.getId();
@@ -59,7 +41,7 @@ class MixerChannel extends React.Component {
         <div className='content-center'>
           <label>Balance</label>
             <FixedKnob min={-100} max={100} colorId={1}
-              onChange={value => this.changePan(value)} />
+              onChange={value => this.state.source.setPanned(value/100)} />
         </div>
       </div>
     );

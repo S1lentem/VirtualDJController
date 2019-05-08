@@ -86,7 +86,8 @@ class AudioPlayer extends React.Component {
       const audioName = files[0].name;
       this.setState({
         isLoaded: true,
-        audioName: audioName.substr(0, audioName.lastIndexOf('.')) || audioName
+        audioName: audioName.substr(0, audioName.lastIndexOf('.')) || audioName,
+        playingState: 'stoped'
       });
     }
     reader.readAsDataURL(files[0]);
