@@ -5,7 +5,7 @@ import { guess } from 'web-audio-beat-detector';
 import Waveform from'./Waveform/Waveform'
 import Oscilloscope from './Oscilloscope/Oscilloscope';
 import diskImg from './disk.png'
-
+import styled, {css, keyframes} from "styled-components"
 
 import './AudioPlayer.css'
 
@@ -18,6 +18,7 @@ const STOP_BUTTON_NAME = 'stop';
 const PAUSE_BUTTON_NAME = 'pause';
 const LOAD_AUDIO_BUTTON = 'load_audio';
 const AUDIO_TAG = 'audio'
+const DISK_NAME = 'disk';
 
 class AudioPlayer extends React.Component {
   constructor(props){
@@ -127,6 +128,57 @@ class AudioPlayer extends React.Component {
     this.setState({playingState: 'suspended'});
   }
 
+  getAngleDiskComponent(){
+    const image = document.getElementById(DISK_NAME + this.state.id);
+    if (!image){
+      return 0;
+    }
+    const valueRotate = window.getComputedStyle(image, null)
+        .getPropertyValue('transform');
+
+    if (valueRotate == 'none'){
+      return 0;
+    }
+    const values = valueRotate.split('(')[1].split(')')[0].split(',');
+
+    let degree = Math.round(Math.asin(values[1]) * (180/Math.PI));
+    if (values[0] < 0){
+      degree = 180 - degree;
+    }
+    if (degree < 0) {
+      degree += 360;
+    }
+    return degree;
+  }
+
+  getStyleForDisk(state){
+    let angle = this.getAngleDiskComponent() % 360;
+    if (state === 'played'){
+      const spin = keyframes`
+        from {transform: rotate(${angle}deg);}
+        to {transform: rotate(${angle+360}deg);}
+      `
+      const animation = css`${spin} 5s linear infinite normal`
+
+      return styled.img`
+        width: 12rem;
+        height: 12rem;
+        border-radius: 50%;
+        border: 5px solid;
+        animation: ${animation};
+      `
+    } else {
+      angle = state === 'stoped' ? 0 : angle;
+      return styled.img`
+        width: 12rem;
+        height: 12rem;
+        border-radius: 50%;
+        border: 5px solid;
+        transform: rotate(${angle}deg);
+      `
+    }
+  }
+
 
   render(){
     const audioSource = this.state.audioSource;
@@ -136,10 +188,9 @@ class AudioPlayer extends React.Component {
     const audioName = this.state.audioName !== null ? this.state.audioName:
       'Audio not load'
 
-    const diskCSSSelector = this.state.playingState === 'played' ?
-          'audiodisk audiodisk-play' : 'audiodisk'
+    const DISK = this.getStyleForDisk(this.state.playingState);
 
-    console.log('id', id);
+
     return (
         <div className='audio-player'>
           <div className='audio-block title'>
@@ -151,14 +202,12 @@ class AudioPlayer extends React.Component {
             />
           </div>
           <div className='audio-block'>
-            <div className='flex-container'>
-              <h3 id={STATUS_TEXT_NAME + id}>{audioName}</h3>
-              <label className='file-upload' value='Upload audio file'>
-                <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
-                  onChange={() => this.loadAuio()} />
-                Load audio
-              </label>
-            </div>
+            <h4 id={STATUS_TEXT_NAME + id}>{audioName}</h4>
+            <label className='file-upload' value='Upload audio file'>
+              <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
+                onChange={() => this.loadAuio()} />
+              Load audio
+            </label>
           </div>
 
           <audio id={AUDIO_TAG + id} />
@@ -190,7 +239,8 @@ class AudioPlayer extends React.Component {
 
 
           <div className='audio-block flex-container'>
-            <img src={diskImg} alt='disk' className={diskCSSSelector}/>
+            <DISK src={diskImg} alt='disk'
+              id={DISK_NAME + id}/>
             <div>
               <input id={SPEED_SLIEDR_NAME + id} type='range'
                     className='speed-slider'

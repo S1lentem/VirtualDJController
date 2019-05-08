@@ -23,10 +23,10 @@ input[type='file'] {
   display: none;
 }
 
-h3 {
-  /* padding: 0px 1em; */
-  margin: 0px;
-  max-width: 190px;
+h4 {
+  width: 100%;
+  text-align: center;
+  word-wrap: break-word;
 }
 
 .audio-block > button {
@@ -74,21 +74,17 @@ button:disabled {
 }
 
 .audiodisk-play {
-  animation: 5s ease-in 0s normal none infinite running rotation;
-  animation-timing-function: steps(128, end);
+  animation: rotation 5s linear infinite normal;  
 }
 
 
-@@keyframes rotation {
-  from { transform: rotate(0deg);}
-  to { transform: rotate(360deg);}
-}
 @-webkit-keyframes rotation {
-   0% {
-     transform: rotate(0deg);
-   }
-   100% {
+
+   from {
      transform: rotate(360deg);
+   }
+   to {
+     transform: rotate(720deg);
    }
 }
 
@@ -105,5 +101,5 @@ button:disabled {
 
 .audio-player {
   padding: 0 2rem;
-  /* wid */
+  width: 22rem;
 }

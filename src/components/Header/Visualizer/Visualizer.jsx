@@ -17,7 +17,7 @@ export default class Visualizer extends React.Component {
       const canvas = document.getElementById('visual');
       const ctx = canvas.getContext('2d');
 
-      analyser.fftSize = 256;
+        analyser.fftSize = 256;
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
 

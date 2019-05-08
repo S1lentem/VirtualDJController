@@ -22,7 +22,7 @@ class Main extends React.Component {
 
   render(){
     return (
-      <div>
+      <div className='main'>
         <Header analyser={this.state.analyser}/>
         <Controller updateanalyser={this.updateanalyser}/>
         <Footer analyser={this.state.analyser} />

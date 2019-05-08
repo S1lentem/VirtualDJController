@@ -1,6 +1,12 @@
 body {
   background-color: #C0C0C0;
   margin: 0;
+  height: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 #root {
@@ -29,4 +35,10 @@ body {
 
 .content-center {
   text-align: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

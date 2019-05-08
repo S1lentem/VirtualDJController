@@ -1,4 +1,5 @@
 .controller {
+  flex: 1 0 auto;
   border-top: solid 0.2rem;
   border-bottom: solid 0.2rem;
 }
