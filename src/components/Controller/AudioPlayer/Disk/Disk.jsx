@@ -16,7 +16,8 @@ export default class Disk extends React.Component{
         img.style.animationPlayState = 'paused';
         break;
       case 'stoped':
-        img.style.animationPlayState = 'initial';
+        img.style.animationPlayState = 'paused';
+        // img.style.animationPlayState = 'initial';
       default:
 
     }

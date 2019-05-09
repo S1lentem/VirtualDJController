@@ -3,9 +3,7 @@
 }
 
 .mixer {
-  border: 0.2rem solid;
-  /* border-left: 0.2rem solid;
-  border-right: 0.2rem solid; */
+  justify-content: center;
 }
 
 input[type=range]::-webkit-slider-thumb {

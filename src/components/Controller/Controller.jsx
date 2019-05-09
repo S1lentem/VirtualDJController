@@ -37,7 +37,7 @@ class Controller extends React.Component {
 
   render(){
     return (
-      <div className='flex-container flex-container-center-content controller'>
+      <div className='controller'>
         {this.state.leftAudioPlayers}
         <Mixer audioSources={this.state.audioSources} />
         {this.state.rightAudioPlayers}

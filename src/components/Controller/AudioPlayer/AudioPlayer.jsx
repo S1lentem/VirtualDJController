@@ -103,12 +103,27 @@ class AudioPlayer extends React.Component {
   }
 
   setLoop(value){
+    console.log(value);
     if (this.props.source.getAudioTimeManger().getLoopTime() !== Number(value)){
       this.props.source.getAudioTimeManger().setLoop(Number(value));
       this.setState({currentValueLoop: value});
     } else {
       this.props.source.getAudioTimeManger().resetLoop();
       this.setState({currentValueLoop: null});
+    }
+  }
+
+  setLeftLoop(){
+    const currentValueLoop = this.state.currentValueLoop;
+    if (currentValueLoop > 0.5) {
+      this.setLoop(currentValueLoop / 2);
+    }
+  }
+
+  setRightLoop(){
+    const currentValueLoop = this.state.currentValueLoop;
+    if (currentValueLoop < 8) {
+      this.setLoop(currentValueLoop * 2);
     }
   }
 
@@ -140,7 +155,7 @@ class AudioPlayer extends React.Component {
               colorClassForLoop : '';
         return (
           <button
-            className={'loop-button ' + isActiveClassName}
+            className={'black-button center-button ' + isActiveClassName}
             onClick={event => this.setLoop(numberValue)}>
             {value}
           </button>
@@ -173,7 +188,7 @@ class AudioPlayer extends React.Component {
 
             loop={false}
             id={AUDIO_TAG + id}
-            onended='alert("tnks")'
+            onended={() => alert('oops')}
             />
 
           <div className='audio-block'>
@@ -186,19 +201,19 @@ class AudioPlayer extends React.Component {
           <div className='content-center audio-block'>
             <button id={PLAY_BUTTON_NAME + id}
               onClick={() => this.playAudio()}
-              className='left-radius-button control-button'
+              className='left-button black-button'
               disabled={isLoaded ? false : true}>
               Play
             </button>
             <button id={PAUSE_BUTTON_NAME + id}
               onClick={() => this.pauseAudio()}
-              className='control-button'
+              className='black-button'
               disabled={isLoaded ? false : true}>
               Pause
             </button>
             <button id={STOP_BUTTON_NAME + id}
               onClick={() => this.stopAudio()}
-              className='control-button right-radius-button'
+              className='black-button right-button'
               disabled={isLoaded ? false : true}>
               Stop
             </button>
@@ -219,7 +234,7 @@ class AudioPlayer extends React.Component {
                   Speed
                 </label> <br className='vertical-split'/>
                 <button onClick={() => this.smoothResetSpeed()}
-                  className='control-button'>
+                  className='black-button'>
                   Reset speed
                 </button>
               </div>
@@ -228,18 +243,29 @@ class AudioPlayer extends React.Component {
 
           <div className='audio-block content-center'>
             <label className=''>Looping</label><br />
-            <button className='left-radius-button loop-button'>
-              <strong>&lt;&lt;</strong>
+            <button
+              className='left-button black-button'
+              onClick={() => this.setLeftLoop()}>
+              &lt;&lt;
             </button>
               {loopButtons}
-            <button className='right-radius-button loop-button'>
-              <strong>&gt;&gt;</strong>
+            <button
+              className='right-button black-button'
+              onClick={() => this.setRightLoop()}>
+              &gt;&gt;
             </button>
           </div>
         </div>
       );
   }
 
+  componentDidMount(){
+    const audio = document.getElementById(AUDIO_TAG + this.props.id);
+    audio.addEventListener('ended', () => {
+      this.diskChild.current.setStatus('stoped');
+      this.props.source.getAudioTimeManger().stop();
+    })
+  }
 }
 
 export {AudioPlayer, AUDIO_TAG};

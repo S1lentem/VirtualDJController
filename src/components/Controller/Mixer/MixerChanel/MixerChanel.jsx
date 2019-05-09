@@ -26,14 +26,14 @@ class MixerChannel extends React.Component {
     const id = this.state.source.getId();
 
     return (
-      <div>
+      <div className='chanel'>
         <div className='content-center'>
           <Frequencies source={this.state.source} />
         </div>
         <div className='content-center'>
           <label htmlFor={GAIN_SLIEDR_NAME + id}>Volume</label>
         </div>
-        <div>
+        <div className='content-center'>
           <input id={GAIN_SLIEDR_NAME + id} type='range' className='volume-slider'
             onInput={() => this.changeGain()}
             min='0' max='1.25' step='0.0125'/>
