@@ -92,6 +92,7 @@ h4 {
 
 .speed-slider {
   -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
   height: 10rem;
 }
 

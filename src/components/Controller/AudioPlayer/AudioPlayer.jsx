@@ -79,7 +79,10 @@ class AudioPlayer extends React.Component {
     const reader = new FileReader();
     const arrayBufferReader = new FileReader();
     const files = document.getElementById(LOAD_AUDIO_BUTTON + this.props.id).files;
-
+    if (!files[0]){
+      alert('Bad file');
+      return;
+    }
     reader.onload = ev => {
       this.props.source.load(ev.target.result);
       const audioName = files[0].name;
@@ -178,7 +181,7 @@ class AudioPlayer extends React.Component {
               {this.state.audioName}
             </h4>
             <label className='file-upload' value='Upload audio file'>
-              <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='audio/'
+              <input id={LOAD_AUDIO_BUTTON + id} type='file' accept='.mp3'
                 onChange={() => this.loadAuio()} />
               Load audio
             </label>
