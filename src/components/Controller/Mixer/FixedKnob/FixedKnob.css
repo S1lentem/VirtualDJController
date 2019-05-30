@@ -1,0 +1,8 @@
+svg[class='injected-svg']{
+  transform: rotate(180deg);
+}
+
+.knob {
+  text-align: center;
+  width: 100%;
+}

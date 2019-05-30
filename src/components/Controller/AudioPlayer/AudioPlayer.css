@@ -1,0 +1,136 @@
+.audio-block {
+  width: 100%;
+  padding: 0.5rem 0rem;
+  position: relative;
+}
+
+.file-upload  {
+  height: 1em;
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: #000000;
+  cursor: pointer;
+  padding: 2px 12px;
+  background-color: #202020;
+  color: #E5FFCC;
+}
+
+.file-upload:hover {
+  background: #808080
+}
+
+input[type='file'] {
+  display: none;
+}
+
+h4 {
+  width: 100%;
+  height: 3rem;
+  max-height: 3rem;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+.black-button {
+  font-size: 90%;
+  font-weight: 700;
+  color: rgb(209,209,217);
+  text-decoration: none;
+  text-shadow: 0 -1px 2px rgba(0,0,0,.2);
+  padding: .5em 1em;
+  outline: none;
+  background: linear-gradient(rgb(110,112,120), rgb(81,81,86)) rgb(110,112,120);
+  box-shadow:
+   0 1px rgba(255,255,255,.2) inset,
+   0 3px 5px rgba(0,1,6,.5),
+   0 0 1px 1px rgba(0,1,6,.2);
+  transition: .2s ease-in-out;
+}
+
+.black-button:disabled {
+  background: black;
+}
+
+
+.center-button {
+  border-radius: 3px;
+}
+
+.left-button {
+  border-radius: 3rem 0rem 0rem 3rem;
+}
+
+.right-button {
+  border-radius: 0rem 3rem 3rem 0rem;
+}
+
+.control-button {
+  width: 6rem;
+  height: 1.5rem;
+}
+
+.loop-button {
+  width: 3rem;
+  height: 2rem;
+}
+
+.red {
+  background: #B22222;
+}
+
+.red:hover {
+  background: #B22222;
+}
+
+.blue {
+  background: #00008B;
+}
+
+.blue:hover {
+  background: #00008B;
+}
+
+.speed-slider {
+  -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
+  height: 10rem;
+}
+
+.red-border-audiodisk{
+  border-radius: 50%;
+  border: 5px solid red;
+}
+
+.blue-border-audiodisk {
+  border-radius: 50%;
+  border: 5px solid blue;
+}
+
+.title {
+  height: 4rem;
+}
+
+.title-text {
+  padding-bottom: 1rem;
+  position: absolute;
+  width: 100%;
+  align: center;
+}
+
+.audio-player {
+  width: 22rem;
+  padding: 0 2rem;
+}
+
+
+
+.waveform-status{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top: 25%;
+  bottom: 25%;
+  font-size: 2rem;
+  font-weight: bold;
+}

@@ -1,0 +1,11 @@
+.crossfader-slider {
+  width: 86%;
+}
+
+.mixer {
+  justify-content: center;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 20rem;
+}
