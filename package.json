@@ -10,7 +10,7 @@
     "react-native-svg": "^9.3.7",
     "react-rotary-knob": "^1.1.5",
     "react-rotary-knob-skin-pack": "^1.0.2",
-    "react-scripts": "2.1.8",
+    "react-scripts": "5.0.1",
     "react-wavesurfer": "^0.8.6",
     "styled-components": "^4.2.0",
     "waveform-data": "^2.1.2",
